@@ -8,9 +8,9 @@ namespace LindyCircleMVC.Models
 {
     public class Attendance
     {
-        public int AttendanceId { get; set; }
-        public int MemberId { get; set; }
-        public int PracticeId { get; set; }
+        public int AttendanceID { get; set; }
+        public int MemberID { get; set; }
+        public int PracticeID { get; set; }
         public int PaymentType { get; set; }
         [Display(Name = "Type")]
         public string PaymentTypeText {
@@ -29,7 +29,7 @@ namespace LindyCircleMVC.Models
         public decimal PaymentAmount { get; set; }
 
         public Member Member { get; set; }
-        public Practice Practice { get; set; }
-        public ICollection<PunchCardUsage> PunchCardUsages { get; set; }
+        //public Practice Practice { get; set; }
+        //public ICollection<PunchCardUsage> PunchCardUsages { get; set; }
     }
 }

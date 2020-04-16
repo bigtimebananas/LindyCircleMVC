@@ -8,9 +8,9 @@ namespace LindyCircleMVC.Models
 {
     public class PunchCard
     {
-        public int PunchCardId { get; set; }
-        public int PurchaseMemberId { get; set; }
-        public int CurrentMemberId { get; set; }
+        public int PunchCardID { get; set; }
+        public int PurchaseMemberID { get; set; }
+        public int CurrentMemberID { get; set; }
         [Display(Name = "Purchase Date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime PurchaseDate { get; set; }
         [Display(Name = "Amount")]
