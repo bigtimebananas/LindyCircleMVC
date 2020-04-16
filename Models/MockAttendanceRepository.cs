@@ -7,7 +7,7 @@ namespace LindyCircleMVC.Models
 {
     public class MockAttendanceRepository : IAttendanceRepository
     {
-        private List<Attendance> Attendances =>
+        public IEnumerable<Attendance> AllAttendances =>
             new List<Attendance> {
                 new Attendance { AttendanceID = 1, MemberID = 1, PracticeID = 1, PaymentType = 1, PaymentAmount = 7M },
                 new Attendance { AttendanceID = 2, MemberID = 2, PracticeID = 1, PaymentType = 1, PaymentAmount = 7M },
@@ -15,15 +15,15 @@ namespace LindyCircleMVC.Models
             };
 
         public Attendance GetAttendance(int attendanceID) {
-            return Attendances.FirstOrDefault(a => a.AttendanceID == attendanceID);
+            return AllAttendances.FirstOrDefault(a => a.AttendanceID == attendanceID);
         }
 
         public IEnumerable<Attendance> GetAttendancesByMember(int memberID) {
-            return Attendances.Where(a => a.MemberID == memberID);
+            return AllAttendances.Where(a => a.MemberID == memberID);
         }
 
         public IEnumerable<Attendance> GetAttendancesByPractice(int practiceID) {
-            return Attendances.Where(a => a.PracticeID == practiceID);
+            return AllAttendances.Where(a => a.PracticeID == practiceID);
         }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model MembersIndexViewModel
+
+@Model.ActiveStatus
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Attended
+            </th>
+            <th>
+                Inactive
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model.Members) {
+            <tr>
+                <td>
+                    @member.FirstLastName
+                </td>
+                <td>
+                    @member.TotalAttendance
+                </td>
+                <td>
+                    @member.Inactive
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
