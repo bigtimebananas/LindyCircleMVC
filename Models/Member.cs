@@ -7,11 +7,9 @@ namespace LindyCircleMVC.Models
     public class Member
     {
         public int MemberID { get; set; }
-        [Required, MaxLength(50)]
-        [Display(Name = "First Name")]
+        [Required, Display(Name = "First Name"), MaxLength(50)]
         public string FirstName { get; set; }
-        [Required, MaxLength(50)]
-        [Display(Name = "Last Name")]
+        [Required, Display(Name = "Last Name"), MaxLength(50)]
         public string LastName { get; set; }
         public bool Inactive { get; set; }
         [Display(Name = "Status")]
@@ -28,7 +26,7 @@ namespace LindyCircleMVC.Models
                 else return PunchCardsHeld.Sum(t => t.RemainingPunches);
             }
         }
-        [Display(Name = "Total Paid")]
+        [Display(Name = "Total Paid"), DisplayFormat(DataFormatString = "{0:#0.00}")]
         public decimal TotalPaid {
             get {
                 var attendances = 0M;

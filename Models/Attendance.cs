@@ -8,6 +8,7 @@ namespace LindyCircleMVC.Models
         public int AttendanceID { get; set; }
         public int MemberID { get; set; }
         public int PracticeID { get; set; }
+        [Required]
         public int PaymentType { get; set; }
         [Display(Name = "Type")]
         public string PaymentTypeText {
@@ -21,8 +22,7 @@ namespace LindyCircleMVC.Models
                 };
             }
         }
-        [Required]
-        [Display(Name = "Amount")]
+        [Required, Display(Name = "Amount"), DisplayFormat(DataFormatString = "{0:#0.00}")]
         public decimal PaymentAmount { get; set; }
 
         public Member Member { get; set; }

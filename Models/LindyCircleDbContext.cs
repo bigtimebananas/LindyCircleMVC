@@ -9,7 +9,7 @@ namespace LindyCircleMVC.Models
         }
 
         public DbSet<Attendance> Attendance { get; set; }
-        public DbSet<Default> Default { get; set; }
+        public DbSet<Default> Defaults { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Practice> Practices { get; set; }
         public DbSet<PunchCardUsage> PunchCardUsage { get; set; }
@@ -19,13 +19,35 @@ namespace LindyCircleMVC.Models
             modelBuilder.HasAnnotation("Relational:DefaultSchema", "dbsa");
 
             modelBuilder.Entity<Attendance>(entity => {
-                entity.Property(e => e.AttendanceID).HasColumnName("AttendanceID");
+                entity.HasKey(e => e.AttendanceID)
+                    .HasName("PK_Attendance");
 
-                entity.Property(e => e.MemberID).HasColumnName("MemberID");
+                entity.HasIndex(e => e.MemberID)
+                    .HasName("IX_Attendance_MemberID");
 
-                entity.Property(e => e.PaymentAmount).HasColumnType("decimal(4, 2)");
+                entity.HasIndex(e => e.PracticeID)
+                    .HasName("IX_Attendance_PracticeID");
 
-                entity.Property(e => e.PracticeID).HasColumnName("PracticeID");
+                entity.Property(e => e.AttendanceID)
+                    .HasColumnName("AttendanceID");
+
+                entity.Property(e => e.MemberID)
+                    .HasColumnName("MemberID")
+                    .IsRequired();
+
+                entity.Property(e => e.PracticeID)
+                    .HasColumnName("PracticeID")
+                    .IsRequired();
+
+                entity.Property(e => e.PaymentType)
+                    .HasColumnName("PaymentType")
+                    .IsRequired()
+                    .HasColumnType("int");
+
+                entity.Property(e => e.PaymentAmount)
+                    .HasColumnName("PaymentAmount")
+                    .IsRequired()
+                    .HasColumnType("decimal(4, 2)");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.Attendances)
@@ -41,36 +63,52 @@ namespace LindyCircleMVC.Models
             });
 
             modelBuilder.Entity<Default>(entity => {
-                entity.HasKey(e => e.DefaultID);
+                entity.HasKey(e => e.DefaultID)
+                    .HasName("PK_Defaults");
 
-                entity.Property(e => e.DefaultID).HasColumnName("DefaultID");
+                entity.Property(e => e.DefaultID)
+                    .HasColumnName("DefaultID");
 
                 entity.Property(e => e.DefaultName)
+                    .HasColumnName("DefaultName")
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DefaultValue).HasColumnType("decimal(5, 2)");
+                entity.Property(e => e.DefaultValue)
+                    .HasColumnName("DefaultValue")
+                    .IsRequired()
+                    .HasColumnType("decimal(5, 2)");
             });
 
             modelBuilder.Entity<Member>(entity => {
-                entity.HasKey(e => e.MemberID);
+                entity.HasKey(e => e.MemberID)
+                    .HasName("PK_Members");
 
-                entity.Property(e => e.MemberID).HasColumnName("MemberID");
+                entity.Property(e => e.MemberID)
+                    .HasColumnName("MemberID");
 
                 entity.Property(e => e.FirstName)
+                    .HasColumnName("FirstName")
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
+                    .HasColumnName("LastName")
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Inactive)
+                    .HasColumnName("Inactive")
+                    .IsRequired()
+                    .HasDefaultValue(false);
             });
 
             modelBuilder.Entity<Practice>(entity => {
-                entity.HasKey(e => e.PracticeID);
+                entity.HasKey(e => e.PracticeID)
+                    .HasName("PK_Practices");
 
                 entity.HasIndex(e => e.PracticeDate)
                     .HasName("IX_PracticeDate")
@@ -80,15 +118,35 @@ namespace LindyCircleMVC.Models
                     .HasName("IX_PracticeNumber")
                     .IsUnique();
 
-                entity.Property(e => e.PracticeID).HasColumnName("PracticeID");
+                entity.Property(e => e.PracticeID)
+                    .HasColumnName("PracticeID");
 
-                entity.Property(e => e.MiscExpense).HasColumnType("decimal(5, 2)");
+                entity.Property(e => e.PracticeDate)
+                    .HasColumnName("PracticeDate")
+                    .IsRequired()
+                    .HasColumnType("date");
 
-                entity.Property(e => e.MiscRevenue).HasColumnType("decimal(5, 2)");
+                entity.Property(e => e.PracticeNumber)
+                    .HasColumnName("PracticeNumber")
+                    .IsRequired()
+                    .HasColumnType("int");
 
-                entity.Property(e => e.PracticeCost).HasColumnType("decimal(5, 2)");
+                entity.Property(e => e.PracticeCost)
+                    .HasColumnName("PracticeCost")
+                    .IsRequired()
+                    .HasColumnType("decimal(5, 2)");
 
-                entity.Property(e => e.PracticeDate).HasColumnType("date");
+                entity.Property(e => e.MiscExpense)
+                    .HasColumnName("MiscExpense")
+                    .IsRequired()
+                    .HasColumnType("decimal(5, 2)")
+                    .HasDefaultValue(0M);
+
+                entity.Property(e => e.MiscRevenue)
+                    .HasColumnName("MiscRevenue")
+                    .IsRequired()
+                    .HasColumnType("decimal(5, 2)")
+                    .HasDefaultValue(0M);
 
                 entity.Property(e => e.PracticeTopic)
                     .IsRequired()
@@ -97,13 +155,25 @@ namespace LindyCircleMVC.Models
             });
 
             modelBuilder.Entity<PunchCardUsage>(entity => {
-                entity.HasKey(e => e.UsageID);
+                entity.HasKey(e => e.UsageID)
+                    .HasName("PK_PunchCardUsage");
 
-                entity.Property(e => e.UsageID).HasColumnName("UsageID");
+                entity.HasIndex(e => e.AttendanceID)
+                    .HasName("IX_PunchCardUsage_AttendanceID");
 
-                entity.Property(e => e.AttendanceID).HasColumnName("AttendanceID");
+                entity.HasIndex(e => e.PunchCardID)
+                    .HasName("IX_PunchCardUsage_PunchCardID");
 
-                entity.Property(e => e.PunchCardID).HasColumnName("PunchCardID");
+                entity.Property(e => e.UsageID)
+                    .HasColumnName("UsageID");
+
+                entity.Property(e => e.AttendanceID)
+                    .HasColumnName("AttendanceID")
+                    .IsRequired();
+
+                entity.Property(e => e.PunchCardID)
+                    .HasColumnName("PunchCardID")
+                    .IsRequired();
 
                 entity.HasOne(d => d.Attendance)
                     .WithMany(p => p.PunchCardUsages)
@@ -119,17 +189,35 @@ namespace LindyCircleMVC.Models
             });
 
             modelBuilder.Entity<PunchCard>(entity => {
-                entity.HasKey(e => e.PunchCardID);
+                entity.HasKey(e => e.PunchCardID)
+                    .HasName("PK_PunchCards");
 
-                entity.Property(e => e.PunchCardID).HasColumnName("PunchCardID");
+                entity.HasIndex(e => e.CurrentMemberID)
+                    .HasName("IX_PunchCards_CurrentMemberID");
 
-                entity.Property(e => e.CurrentMemberID).HasColumnName("CurrentMemberID");
+                entity.HasIndex(e => e.PurchaseMemberID)
+                    .HasName("IX_PunchCards_PurchaseMemberID");
 
-                entity.Property(e => e.PurchaseAmount).HasColumnType("decimal(4, 2)");
+                entity.Property(e => e.PunchCardID)
+                    .HasColumnName("PunchCardID");
 
-                entity.Property(e => e.PurchaseDate).HasColumnType("date");
+                entity.Property(e => e.PurchaseMemberID)
+                    .HasColumnName("PurchaseMemberID")
+                    .IsRequired();
 
-                entity.Property(e => e.PurchaseMemberID).HasColumnName("PurchaseMemberID");
+                entity.Property(e => e.CurrentMemberID)
+                    .HasColumnName("CurrentMemberID")
+                    .IsRequired();
+
+                entity.Property(e => e.PurchaseDate)
+                    .HasColumnName("PurchaseDate")
+                    .IsRequired()
+                    .HasColumnType("date");
+
+                entity.Property(e => e.PurchaseAmount)
+                    .HasColumnName("PurchaseAmount")
+                    .IsRequired()
+                    .HasColumnType("decimal(4, 2)");
 
                 entity.HasOne(d => d.CurrentMember)
                     .WithMany(p => p.PunchCardsHeld)

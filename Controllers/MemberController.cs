@@ -18,6 +18,7 @@ namespace LindyCircleMVC.Controllers
                 Members = _memberRepository.GetMembers(activeOnly),
                 ActiveStatus = activeOnly ? "Active members" : "All members"
             };
+            ViewBag.Title = "Members";
             return View(membersIndexViewModel);
         }
     }
