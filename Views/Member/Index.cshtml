@@ -1,7 +1,7 @@
 ﻿@model MembersIndexViewModel
 
 @Model.ActiveStatus
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-sm">
     <thead>
         <tr>
             <th>
@@ -11,7 +11,10 @@
                 Attended
             </th>
             <th>
-                Inactive
+                Remaining Punches
+            </th>
+            <th>
+                Status
             </th>
         </tr>
     </thead>
@@ -25,7 +28,10 @@
                     @member.TotalAttendance
                 </td>
                 <td>
-                    @member.Inactive
+                    @member.RemainingPunches
+                </td>
+                <td>
+                    @member.ActiveText
                 </td>
             </tr>
         }
