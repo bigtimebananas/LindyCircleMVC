@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LindyCircleMVC.ViewModels
 {
-    public class MembersIndexViewModel
+    public class MembersListViewModel
     {
         public IEnumerable<Member> Members { get; set; }
         public string ActiveStatus { get; set; }
