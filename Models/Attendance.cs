@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LindyCircleMVC.Models
 {
@@ -27,6 +26,6 @@ namespace LindyCircleMVC.Models
 
         public Member Member { get; set; }
         public Practice Practice { get; set; }
-        public ICollection<PunchCardUsage> PunchCardUsages { get; set; }
+        public PunchCardUsage PunchCardUsage { get; set; }
     }
 }

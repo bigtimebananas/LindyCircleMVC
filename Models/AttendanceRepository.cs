@@ -14,14 +14,15 @@ namespace LindyCircleMVC.Models
         public IEnumerable<Attendance> GetAttendancesByMember(int memberID) =>
             _dbContext.Attendance
                 .Include(i => i.Practice)
-                .Include(i => i.PunchCardUsages)
-                .Where(a => a.MemberID == memberID);
+                .Where(a => a.MemberID == memberID)
+                .OrderBy(o => o.Practice.PracticeDate);
 
         public IEnumerable<Attendance> GetAttendancesByPractice(int practiceID) =>
             _dbContext.Attendance
                 .Include(i => i.Member)
-                .Include(i => i.PunchCardUsages)
-                .Where(a => a.PracticeID == practiceID);
+                .Where(a => a.PracticeID == practiceID)
+                .OrderBy(o => o.Member.LastName)
+                    .ThenBy(o => o.Member.FirstName);
 
         public Attendance GetAttendance(int attendanceID) =>
             _dbContext.Attendance.FirstOrDefault(a => a.AttendanceID == attendanceID);

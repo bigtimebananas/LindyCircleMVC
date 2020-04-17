@@ -159,7 +159,8 @@ namespace LindyCircleMVC.Models
                     .HasName("PK_PunchCardUsage");
 
                 entity.HasIndex(e => e.AttendanceID)
-                    .HasName("IX_PunchCardUsage_AttendanceID");
+                    .HasName("IX_PunchCardUsage_AttendanceID")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.PunchCardID)
                     .HasName("IX_PunchCardUsage_PunchCardID");
@@ -176,8 +177,8 @@ namespace LindyCircleMVC.Models
                     .IsRequired();
 
                 entity.HasOne(d => d.Attendance)
-                    .WithMany(p => p.PunchCardUsages)
-                    .HasForeignKey(d => d.AttendanceID)
+                    .WithOne(p => p.PunchCardUsage)
+                    .HasForeignKey<Attendance>(d => d.AttendanceID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PunchCardUsage_Attendance");
 

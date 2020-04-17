@@ -19,7 +19,7 @@ namespace LindyCircleMVC.Models
                 .Include(i => i.PunchCardsPurchased)
                 .Where(m => !m.Inactive || m.Inactive != activeOnly)
                 .OrderBy(o => o.FirstName)
-                .ThenBy(o => o.LastName);
+                    .ThenBy(o => o.LastName);
 
         public Member GetMember(int memberID) =>
             _dbContext.Members

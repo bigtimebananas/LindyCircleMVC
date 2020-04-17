@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace LindyCircleMVC.Models
+﻿namespace LindyCircleMVC.Models
 {
     public interface IDefaultRepository
     {
