@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LindyCircleMVC.Models;
+﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +12,7 @@ namespace LindyCircleMVC.Controllers
             _memberRepository = memberRepository;
         }
 
-        public ViewResult Index(bool activeOnly = false) {
+        public ViewResult Index(bool activeOnly = true) {
             var membersIndexViewModel = new MembersIndexViewModel
             {
                 Members = _memberRepository.GetMembers(activeOnly),
