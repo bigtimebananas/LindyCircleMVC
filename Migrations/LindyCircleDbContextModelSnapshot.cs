@@ -23,10 +23,8 @@ namespace LindyCircleMVC.Migrations
             modelBuilder.Entity("LindyCircleMVC.Models.Attendance", b =>
                 {
                     b.Property<int>("AttendanceID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnName("AttendanceID")
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("MemberID")
                         .HasColumnName("MemberID")
@@ -223,6 +221,7 @@ namespace LindyCircleMVC.Migrations
                         .HasName("PK_PunchCardUsage");
 
                     b.HasIndex("AttendanceID")
+                        .IsUnique()
                         .HasName("IX_PunchCardUsage_AttendanceID");
 
                     b.HasIndex("PunchCardID")
@@ -233,6 +232,12 @@ namespace LindyCircleMVC.Migrations
 
             modelBuilder.Entity("LindyCircleMVC.Models.Attendance", b =>
                 {
+                    b.HasOne("LindyCircleMVC.Models.PunchCardUsage", "PunchCardUsage")
+                        .WithOne("Attendance")
+                        .HasForeignKey("LindyCircleMVC.Models.Attendance", "AttendanceID")
+                        .HasConstraintName("FK_PunchCardUsage_Attendance")
+                        .IsRequired();
+
                     b.HasOne("LindyCircleMVC.Models.Member", "Member")
                         .WithMany("Attendances")
                         .HasForeignKey("MemberID")
@@ -263,12 +268,6 @@ namespace LindyCircleMVC.Migrations
 
             modelBuilder.Entity("LindyCircleMVC.Models.PunchCardUsage", b =>
                 {
-                    b.HasOne("LindyCircleMVC.Models.Attendance", "Attendance")
-                        .WithMany("PunchCardUsages")
-                        .HasForeignKey("AttendanceID")
-                        .HasConstraintName("FK_PunchCardUsage_Attendance")
-                        .IsRequired();
-
                     b.HasOne("LindyCircleMVC.Models.PunchCard", "PunchCard")
                         .WithMany("PunchCardUsages")
                         .HasForeignKey("PunchCardID")
