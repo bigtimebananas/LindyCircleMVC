@@ -8,5 +8,10 @@ namespace LindyCircleMVC.Models
         public UsersDbContext(DbContextOptions<UsersDbContext> options)
             : base(options) {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.HasDefaultSchema("dbsa");
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
