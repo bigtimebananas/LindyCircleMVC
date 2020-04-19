@@ -1,0 +1,42 @@
+﻿@model Member
+
+    <style type="text/css">
+        table {
+            float: left;
+        }
+
+        #punchCards {
+            margin-left: 10px;
+        }
+
+        caption {
+            padding-top: 0px;
+            padding-left: 5px;
+        }
+    </style>
+
+    <div>
+        <form id="details" method="post">
+            <input type="hidden" asp-for="@Model.MemberID" />
+            <input type="hidden" asp-for="@Model.FirstName" />
+            <input type="hidden" asp-for="@Model.LastName" />
+            <input type="hidden" asp-for="@Model.Inactive" />
+            <dl>
+                <dd>
+                    Member: @Html.DisplayFor(model => model.Member.FirstLastName)
+                    &nbsp;[<a asp-page="./Edit" asp-route-memberID=@Model.Member.MemberId>Change name</a>]
+                </dd>
+                <dd>
+                    Unused punches: @Html.DisplayFor(model => model.Member.RemainingPunches)
+                </dd>
+                <dd>
+                    Total paid: @Html.DisplayFor(model => model.Member.TotalPaid)
+                </dd>
+                <dd>
+                    Status: @Html.DisplayFor(model => model.Member.ActiveText)
+                    &nbsp;
+                    <input type="submit" value="@Model.ButtonText" class="btn btn-sm btn-dark" />
+                </dd>
+            </dl>
+        </form>
+    </div>

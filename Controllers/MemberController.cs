@@ -12,7 +12,7 @@ namespace LindyCircleMVC.Controllers
             _memberRepository = memberRepository;
         }
 
-        public ViewResult Index(bool activeOnly = true) {
+        public ViewResult List(bool activeOnly = true) {
             var membersListViewModel = new MembersListViewModel
             {
                 Members = _memberRepository.GetMembers(activeOnly),
@@ -20,6 +20,13 @@ namespace LindyCircleMVC.Controllers
             };
             ViewBag.Title = "Members";
             return View(membersListViewModel);
+        }
+
+        public IActionResult Details(int memberID) {
+            var member = _memberRepository.GetMember(memberID);
+            if (member == null)
+                return NotFound();
+            return View(member);
         }
     }
 }
