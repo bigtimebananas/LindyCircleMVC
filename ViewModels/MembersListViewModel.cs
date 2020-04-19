@@ -7,6 +7,5 @@ namespace LindyCircleMVC.ViewModels
     {
         public IEnumerable<Member> Members { get; set; }
         public string ActiveStatus { get; set; }
-
     }
 }

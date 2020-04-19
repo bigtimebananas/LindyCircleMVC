@@ -22,7 +22,7 @@
         @foreach (var member in Model.Members) {
             <tr>
                 <td>
-                    @member.FirstLastName
+                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@member.FirstLastName</a>
                 </td>
                 <td>
                     @member.TotalAttendance

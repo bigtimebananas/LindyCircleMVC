@@ -22,10 +22,11 @@ namespace LindyCircleMVC.Controllers
             return View(membersListViewModel);
         }
 
-        public IActionResult Details(int memberID) {
-            var member = _memberRepository.GetMember(memberID);
+        public IActionResult Details(int id) {
+            var member = _memberRepository.GetMember(id);
             if (member == null)
-                return NotFound();
+                return RedirectToAction("List", "Member");
+            ViewBag.Title = member.FirstLastName;
             return View(member);
         }
     }

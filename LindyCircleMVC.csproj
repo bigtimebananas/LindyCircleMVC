@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200419195538_InitalCreateLC.cs" />
+    <Compile Remove="Migrations\20200419195538_InitalCreateLC.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitattributes" />
     <None Remove=".gitignore" />
   </ItemGroup>
