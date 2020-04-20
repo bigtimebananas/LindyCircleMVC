@@ -24,6 +24,8 @@ namespace LindyCircleMVC.Models
         public Member GetMember(int memberID) =>
             _dbContext.Members
                 .Include(i => i.Attendances)
+                .Include(i => i.PunchCardsHeld)
+                        .ThenInclude(i => i.PunchCardUsages)
                 .Include(i => i.PunchCardsPurchased)
                 .FirstOrDefault(m => m.MemberID == memberID);
     }

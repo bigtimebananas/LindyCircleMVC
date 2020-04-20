@@ -32,6 +32,9 @@ namespace LindyCircleMVC
                 options.UseSqlServer(Configuration.GetConnectionString("LindyCircleDB")));
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            //If session use is required, uncomment the following two lines:
+            //services.AddHttpContextAccessor();
+            //services.AddSession();
             services.AddControllersWithViews();
         }
 
@@ -43,7 +46,9 @@ namespace LindyCircleMVC
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            //If session use is required, uncomment the following line:
+            //app.UseSession();
+            //UseSession must be called before UseRouting
             app.UseRouting();
 
             app.UseAuthentication();

@@ -20,20 +20,7 @@
     </thead>
     <tbody>
         @foreach (var member in Model.Members) {
-            <tr>
-                <td>
-                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@member.FirstLastName</a>
-                </td>
-                <td>
-                    @member.TotalAttendance
-                </td>
-                <td>
-                    @member.RemainingPunches
-                </td>
-                <td>
-                    @member.ActiveText
-                </td>
-            </tr>
+            <partial name="_MemberList" model="member" />
         }
     </tbody>
 </table>
