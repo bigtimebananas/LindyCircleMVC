@@ -1,26 +1,37 @@
 ﻿@model MembersListViewModel
 
-<span class="text-secondary">@Model.ActiveStatus</span>
-<table class="table table-bordered table-striped table-sm">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Attended
-            </th>
-            <th>
-                Remaining Punches
-            </th>
-            <th>
-                Status
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var member in Model.Members) {
-            <partial name="_MemberList" model="member" />
-        }
-    </tbody>
-</table>
+<span>Show only active members</span>
+<input type="checkbox" name="activeOnly" id="activeOnly" asp-for="ActiveOnly" />
+<div id="members">
+    <partial name="_MemberList" model="@Model" />
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#memberTable').DataTable({
+                retrieve: true,
+                deferRender: true,
+                autoWidth: false,
+                fixedHeader: true,
+                pageLength: 50,
+                columns: [
+                    { visible: false },
+                    null,
+                    { searchable: false },
+                    { searchable: false, orderable: false },
+                    { searchable: false, orderable: false }
+                ],
+                rowId: 'MemberID',
+                order: [[1, "asc"]]
+            });
+        });
+        $('#activeOnly').click(function () {
+            var activeOnly = document.getElementById('activeOnly').checked;
+            $('#members').load('/Member/GetPartial', { activeOnly: activeOnly });
+        });
+    </script>
+}

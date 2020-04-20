@@ -6,6 +6,6 @@ namespace LindyCircleMVC.ViewModels
     public class MembersListViewModel
     {
         public IEnumerable<Member> Members { get; set; }
-        public string ActiveStatus { get; set; }
+        public bool ActiveOnly { get; set; }
     }
 }

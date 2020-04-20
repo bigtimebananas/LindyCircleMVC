@@ -1,0 +1,67 @@
+﻿@model MembersListViewModel
+
+<table id="memberTable" class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>
+                MemberID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Attended
+            </th>
+            <th>
+                Remaining Punches
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model.Members) {
+            <tr>
+                <td>
+                    @member.MemberID
+                </td>
+                <td>
+                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@member.FirstLastName</a>
+                </td>
+                <td>
+                    @member.TotalAttendance
+                </td>
+                <td>
+                    @member.RemainingPunches
+                </td>
+                <td>
+                    @member.ActiveText
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#memberTable').DataTable({
+            retrieve: true,
+            deferRender: true,
+            autoWidth: false,
+            fixedHeader: true,
+            pageLength: 50,
+            columns: [
+                { visible: false },
+                null,
+                { searchable: false },
+                { searchable: false, orderable: false },
+                { searchable: false, orderable: false }
+            ],
+            rowId: 'MemberID',
+            order: [[1, "asc"]]
+        });
+    });
+</script>

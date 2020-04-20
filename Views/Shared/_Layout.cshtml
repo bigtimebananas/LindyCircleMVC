@@ -5,9 +5,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Lindy Circle - @ViewBag.Title</title>
+    <title>@ViewBag.Title | The Lindy Circle</title>
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -23,24 +22,24 @@
                     @*<partial name="_LoginPartial" />*@
                     <ul class="navbar-nav flex-grow-1">
                         @*@if (User.IsInRole("Admin")) {*@
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Member" asp-action="List">Members</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Practice" asp-action="List">Practices</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="PunchCard" asp-action="Index">Punch Cards</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Attendance" asp-action="Index">Attendance</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="History" asp-action="Index">History</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Finance" asp-action="Index">Finances</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Member" asp-action="List">Members</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Practice" asp-action="List">Practices</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="PunchCard" asp-action="Index">Punch Cards</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Attendance" asp-action="Index">Attendance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="History" asp-action="Index">History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Finance" asp-action="Index">Finances</a>
+                        </li>
                         @*}*@
                     </ul>
                 </div>
@@ -60,6 +59,8 @@
     </footer>
 
     <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 

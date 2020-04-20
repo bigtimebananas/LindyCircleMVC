@@ -16,10 +16,19 @@ namespace LindyCircleMVC.Controllers
             var membersListViewModel = new MembersListViewModel
             {
                 Members = _memberRepository.GetMembers(activeOnly),
-                ActiveStatus = activeOnly ? "Active members" : "All members"
+                ActiveOnly = activeOnly
             };
             ViewBag.Title = "Members";
             return View(membersListViewModel);
+        }
+
+        public IActionResult GetPartial(bool activeOnly) {
+            var membersListViewModel = new MembersListViewModel
+            {
+                Members = _memberRepository.GetMembers(activeOnly),
+                ActiveOnly = activeOnly
+            };
+            return PartialView("_MemberList", membersListViewModel);
         }
 
         public IActionResult Details(int id) {
