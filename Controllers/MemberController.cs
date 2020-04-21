@@ -16,10 +16,21 @@ namespace LindyCircleMVC.Controllers
             var membersListViewModel = new MembersListViewModel
             {
                 Members = _memberRepository.GetMembers(activeOnly),
-                ActiveOnly = activeOnly
+                ActiveOnly = activeOnly,
+                Message = TempData["Message"] != null ? TempData["Message"].ToString() : string.Empty
             };
             ViewBag.Title = "Members";
             return View(membersListViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult List(Member newMember) {
+            if (!ModelState.IsValid)
+                return View();
+
+            _memberRepository.AddMember(newMember);
+            TempData["Message"] = $"{newMember.FirstLastName} added.";
+            return RedirectToAction("List", "Member");
         }
 
         public IActionResult GetPartial(bool activeOnly) {
@@ -37,6 +48,27 @@ namespace LindyCircleMVC.Controllers
                 return RedirectToAction("List", "Member");
             ViewBag.Title = member.FirstLastName;
             return View(member);
+        }
+
+        [HttpPost]
+        public IActionResult ToggleActive(Member member) {
+            member.Inactive = !member.Inactive;
+            _memberRepository.UpdateMember(member);
+            return RedirectToAction("Details", "Member", new { id = member.MemberID });
+        }
+
+        public IActionResult Edit(int id) {
+            var member = _memberRepository.GetMember(id);
+            if (member == null)
+                return RedirectToAction("List", "Member");
+            ViewBag.Title = member.FirstLastName;
+            return View(member);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Member member) {
+            _memberRepository.UpdateMember(member);
+            return RedirectToAction("Details", "Member", new { id = member.MemberID });
         }
     }
 }

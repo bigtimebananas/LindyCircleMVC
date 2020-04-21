@@ -30,8 +30,12 @@ namespace LindyCircleMVC
                 .AddEntityFrameworkStores<UsersDbContext>();
             services.AddDbContext<LindyCircleDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LindyCircleDB")));
-            services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<IDefaultRepository, DefaultRepository>();
+            services.AddScoped<IMemberRepository, MemberRepository>();
+            services.AddScoped<IPracticeRepository, PracticeRepository>();
+            services.AddScoped<IPunchCardRepository, PunchCardRepository>();
+            services.AddScoped<IPunchCardUsageRepository, PunchCardUsageRepository>();
             //If session use is required, uncomment the following two lines:
             //services.AddHttpContextAccessor();
             //services.AddSession();

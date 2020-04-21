@@ -18,7 +18,7 @@
 </style>
 
 <div>
-    <form id="details" method="post">
+    <form id="details" asp-action="ToggleActive" method="post">
         <input type="hidden" asp-for="@Model.MemberID" />
         <input type="hidden" asp-for="@Model.FirstName" />
         <input type="hidden" asp-for="@Model.LastName" />
@@ -26,7 +26,8 @@
         <dl>
             <dd>
                 Member: @Model.FirstLastName
-                &nbsp;[<a asp-controller="Member" asp-action="Edit" asp-route-id=@Model.MemberID>Change name</a>]
+                &nbsp;
+                <a asp-action="Edit" asp-route-id=@Model.MemberID class="btn btn-sm btn-dark">Change name</a>
             </dd>
             <dd>
                 Unused punches: @Model.RemainingPunches
@@ -41,5 +42,78 @@
             </dd>
         </dl>
     </form>
-    <a asp-controller="Member" asp-action="List">Return to list</a>
+</div>
+<div>
+    <table class="table-striped table-bordered" id="practices">
+        <caption>Practices</caption>
+        <thead>
+            <tr>
+                <th>
+                    Practice Date
+                </th>
+                <th>
+                    Payment Type
+                </th>
+                <th class="text-right">
+                    Payment Amount
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var practice in Model.Attendances) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => practice.Practice.PracticeDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => practice.PaymentTypeText)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => practice.PaymentAmount)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total Attended</td>
+                <td>@Model.TotalAttendance</td>
+                <td class="text-right">@Model.Attendances.Sum(s => s.PaymentAmount)</td>
+            </tr>
+        </tfoot>
+    </table>
+    <table class="table-striped table-bordered" id="punchCards">
+        <caption>Punch Cards</caption>
+        <thead>
+            <tr>
+                <th>
+                    Purchase Date
+                </th>
+                <th class="text-right">
+                    Amount
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var punchCard in Model.PunchCardsPurchased) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => punchCard.PurchaseDate)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => punchCard.PurchaseAmount)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total: @Model.PunchCardsPurchased.Count</td>
+                <td class="text-right">@Model.PunchCardsPurchased.Sum(s => s.PurchaseAmount)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div style="padding-top: 10px; clear: both;">
+    <a asp-action="List">Return to list</a>
 </div>

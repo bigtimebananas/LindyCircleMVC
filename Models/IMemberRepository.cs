@@ -6,5 +6,8 @@ namespace LindyCircleMVC.Models
     {
         IEnumerable<Member> GetMembers(bool activeOnly);
         Member GetMember(int memberID);
+        Member UpdateMember(Member member);
+        Member AddMember(Member member);
+        Member DeleteMember(Member member);
     }
 }

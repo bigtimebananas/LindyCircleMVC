@@ -1,5 +1,27 @@
 ﻿@model MembersListViewModel
 
+<style type="text/css">
+    .nameText {
+        width: 90px;
+        margin-right: 10px;
+    }
+</style>
+
+<form name="form1" method="post" asp-action="List">
+    <div>
+        <label asp-for="NewMember.FirstName" class="control-label"></label>
+        <input asp-for="NewMember.FirstName" class="nameText" />
+        <label asp-for="NewMember.LastName" class="control-label"></label>
+        <input asp-for="NewMember.LastName" class="nameText" />
+        <input type="submit" value="Add new member" class="btn btn-sm btn-dark" id="btnAdd" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message)) {
+    <div class="alert alert-info">@Model.Message</div>
+}
+
 <span>Show only active members</span>
 <input type="checkbox" name="activeOnly" id="activeOnly" asp-for="ActiveOnly" />
 <div id="members">
