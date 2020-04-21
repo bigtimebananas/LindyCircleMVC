@@ -8,7 +8,7 @@ namespace LindyCircleMVC.Models
     public class Practice
     {
         public int PracticeID { get; set; }
-        [Required, Display(Name = "Practice Date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Required, Display(Name = "Practice Date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime PracticeDate { get; set; }
         [Required, Display(Name = "Practice Number")]
         public int PracticeNumber { get; set; }

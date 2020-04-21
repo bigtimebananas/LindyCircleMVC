@@ -10,25 +10,58 @@ namespace LindyCircleMVC.Models
         public PunchCardRepository(LindyCircleDbContext dbContext) {
             _dbContext = dbContext;
         }
+
         public PunchCard GetPunchCard(int punchCardID) =>
             _dbContext.PunchCards
                 .Include(i => i.PunchCardUsages)
                     .ThenInclude(i => i.Attendance)
-                        .ThenInclude(i => i.Practice)
+                .Include(i => i.PurchaseMember)
+                .Include(i => i.CurrentMember)
                 .FirstOrDefault(p => p.PunchCardID == punchCardID);
 
         public IEnumerable<PunchCard> GetPunchCardsHeldByMember(int memberID) =>
             _dbContext.PunchCards
                 .Include(i => i.PunchCardUsages)
                     .ThenInclude(i => i.Attendance)
-                        .ThenInclude(i => i.Practice)
+                .Include(i => i.PurchaseMember)
+                .Include(i => i.CurrentMember)
                 .Where(p => p.CurrentMemberID == memberID);
 
         public IEnumerable<PunchCard> GetPunchCardsPurchasedByMember(int memberID) =>
             _dbContext.PunchCards
                 .Include(i => i.PunchCardUsages)
                     .ThenInclude(i => i.Attendance)
-                        .ThenInclude(i => i.Practice)
+                .Include(i => i.PurchaseMember)
+                .Include(i => i.CurrentMember)
                 .Where(p => p.PurchaseMemberID == memberID);
+
+        public PunchCard PurchasePunchCard(PunchCard punchCard) {
+            _dbContext.PunchCards.Add(punchCard);
+            _dbContext.SaveChanges();
+            return punchCard;
+        }
+
+        public PunchCard TransferPunchCard(PunchCard punchCard) {
+            _dbContext.Attach(punchCard).State = EntityState.Modified;
+            try {
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException) {
+                if (!PunchCardExists(punchCard.PunchCardID))
+                    return null;
+                else throw;
+            }
+            return punchCard;
+        }
+
+        public void DeletePunchCard(PunchCard punchCard) {
+            if (PunchCardExists(punchCard.PunchCardID) &&
+                punchCard.RemainingPunches == 5) {
+                _dbContext.PunchCards.Remove(punchCard);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        private bool PunchCardExists(int punchCardID) => _dbContext.PunchCards.Find(punchCardID) != null;
     }
 }

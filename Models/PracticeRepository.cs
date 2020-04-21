@@ -62,17 +62,11 @@ namespace LindyCircleMVC.Models
             }
         }
 
-        public int GetNextPracticeNumber() {
-            return _dbContext.Practices.Max(m => m.PracticeNumber) + 1;
-        }
+        public int GetNextPracticeNumber() => _dbContext.Practices.Max(m => m.PracticeNumber) + 1;
 
-        public bool PracticeExists(int practiceID) {
-            return _dbContext.Practices.FirstOrDefault(p => p.PracticeID == practiceID) != null;
-        }
+        public bool PracticeExists(int practiceID) => _dbContext.Practices.Find(practiceID) != null;
 
-        public bool HasParticipants(Practice practice) {
-            return practice.Attendances.Count() > 0;
-        }
+        public bool HasParticipants(Practice practice) => practice.Attendances.Count() > 0;
 
         public bool PracticeNumberUsed(int practiceID, int practiceNumber) {
             if (_dbContext.Practices.FirstOrDefault(p => p.PracticeNumber == practiceNumber) == null)

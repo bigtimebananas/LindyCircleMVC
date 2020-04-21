@@ -9,7 +9,7 @@ namespace LindyCircleMVC.Models
         public int PunchCardID { get; set; }
         public int PurchaseMemberID { get; set; }
         public int CurrentMemberID { get; set; }
-        [Required, Display(Name = "Purchase Date"), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Required, Display(Name = "Purchase Date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime PurchaseDate { get; set; }
         [Required, Display(Name = "Amount"), DisplayFormat(DataFormatString = "{0:#0.00}")]
         public decimal PurchaseAmount { get; set; }

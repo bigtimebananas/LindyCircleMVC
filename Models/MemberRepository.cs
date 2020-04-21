@@ -57,8 +57,6 @@ namespace LindyCircleMVC.Models
             }
         }
 
-        private bool MemberExists(int memberID) {
-            return _dbContext.Members.Find(memberID) != null;
-        }
+        private bool MemberExists(int memberID) => _dbContext.Members.Find(memberID) != null;
     }
 }
