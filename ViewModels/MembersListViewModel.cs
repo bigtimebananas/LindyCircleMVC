@@ -7,7 +7,6 @@ namespace LindyCircleMVC.ViewModels
     {
         public IList<Member> Members { get; set; }
         public bool ActiveOnly { get; set; }
-        public string Message { get; set; }
         public Member NewMember { get;set; }
     }
 }

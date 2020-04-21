@@ -18,8 +18,8 @@
     </div>
 </form>
 
-@if (!string.IsNullOrEmpty(Model.Message)) {
-    <div class="alert alert-info">@Model.Message</div>
+@if (TempData["Message"] != null) {
+    <div class="@TempData["Style"]">@TempData["Message"]</div>
 }
 
 <span>Show only active members</span>

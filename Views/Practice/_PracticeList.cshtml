@@ -1,0 +1,119 @@
+﻿@model PracticeListViewModel
+
+<table id="practiceTable" class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>
+                PracticeID
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Practices[0].PracticeNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Practices[0].PracticeDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Practices[0].PracticeTopic)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].PracticeCost)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].AttendanceRevenue)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].MiscExpense)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].MiscRevenue)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].AttendeeCount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var practice in Model.Practices) {
+            <tr>
+                <td>
+                    @practice.PracticeID
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id=@practice.PracticeID>@Html.DisplayFor(modelItem => practice.PracticeNumber)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => practice.PracticeDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => practice.PracticeTopic)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.PracticeCost)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.AttendanceRevenue)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.MiscExpense)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.MiscRevenue)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.AttendeeCount)
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td colspan="3">
+                Totals
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(s => s.PracticeCost).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(s => s.AttendanceRevenue).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(s => s.MiscExpense).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(s => s.MiscRevenue).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(s => s.AttendeeCount)
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#practiceTable').DataTable({
+            oLanguage: {
+                sSearch: "Search Practice Topics"
+            },
+            autoWidth: false,
+            fixedHeader: true,
+            pageLength: 50,
+            columns: [
+                { visible: false },
+                { searchable: false },
+                { searchable: false },
+                { orderable: false },
+                { searchable: false, orderable: false },
+                { searchable: false, orderable: false },
+                { searchable: false, orderable: false },
+                { searchable: false, orderable: false },
+                { searchable: false }
+            ],
+            rowId: 'PracticeID',
+            order: [[1, "desc"]]
+        });
+    });
+</script>

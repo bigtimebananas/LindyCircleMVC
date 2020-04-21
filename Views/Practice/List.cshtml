@@ -1,0 +1,64 @@
+﻿@model PracticeListViewModel
+
+<style type="text/css">
+    .dateText {
+        width: 120px;
+        margin-right: 10px;
+    }
+</style>
+
+<form name="form1">
+    <div>
+        <label asp-for="StartDate" class="control-label"></label>
+        <input asp-for="StartDate" id="startDate" />
+        &nbsp;
+        <label asp-for="EndDate" class="control-label"></label>
+        <input asp-for="EndDate" id="endDate" />
+        <button class="btn btn-sm btn-dark" id="btnFilter">Filter</button>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+</form>
+
+@if (TempData["Message"] != null) {
+    <div class="@TempData["Style"]">@TempData["Message"]</div>
+}
+
+<div id="practices">
+    <partial name="_PracticeList" model="@Model" />
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#practiceTable').DataTable({
+                oLanguage: {
+                    sSearch: "Search Practice Topics"
+                },
+                autoWidth: false,
+                fixedHeader: true,
+                pageLength: 50,
+                columns: [
+                    { visible: false },
+                    { searchable: false },
+                    { searchable: false },
+                    { orderable: false },
+                    { searchable: false, orderable: false },
+                    { searchable: false, orderable: false },
+                    { searchable: false, orderable: false },
+                    { searchable: false, orderable: false },
+                    { searchable: false }
+                ],
+                rowId: 'PracticeID',
+                order: [[1, "desc"]]
+            });
+        });
+        $('#btnFilter').click(function () {
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+            $('#practices').load('/Practice/GetPartial', { startDate, endDate });
+        });
+    </script>
+}

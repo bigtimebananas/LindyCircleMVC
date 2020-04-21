@@ -7,16 +7,16 @@
                 MemberID
             </th>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Members[0].FirstLastName)
             </th>
             <th>
-                Attended
+                @Html.DisplayNameFor(model => model.Members[0].TotalAttendance)
             </th>
             <th>
-                Remaining Punches
+                @Html.DisplayNameFor(model => model.Members[0].RemainingPunches)
             </th>
             <th>
-                Status
+                @Html.DisplayNameFor(model => model.Members[0].ActiveText)
             </th>
         </tr>
     </thead>
@@ -27,16 +27,16 @@
                     @member.MemberID
                 </td>
                 <td>
-                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@member.FirstLastName</a>
+                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@Html.DisplayFor(modelItem => member.FirstLastName)</a>
                 </td>
                 <td>
-                    @member.TotalAttendance
+                    @Html.DisplayFor(modelItem => member.TotalAttendance)
                 </td>
                 <td>
-                    @member.RemainingPunches
+                    @Html.DisplayFor(modelItem => member.RemainingPunches)
                 </td>
                 <td>
-                    @member.ActiveText
+                    @Html.DisplayFor(modelItem => member.ActiveText)
                 </td>
             </tr>
         }

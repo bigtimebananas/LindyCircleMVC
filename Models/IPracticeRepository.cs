@@ -15,5 +15,6 @@ namespace LindyCircleMVC.Models
         int GetNextPracticeNumber();
         bool PracticeExists(int practiceID);
         bool HasParticipants(Practice practice);
+        bool PracticeNumberUsed(int practiceID, int practiceNumber);
     }
 }

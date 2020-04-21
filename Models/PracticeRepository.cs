@@ -14,11 +14,12 @@ namespace LindyCircleMVC.Models
         public IEnumerable<Practice> AllPractices =>
             _dbContext.Practices
                 .Include(i => i.Attendances)
-                .OrderBy(o => o.PracticeDate);
+                .OrderByDescending(o => o.PracticeDate);
 
         public Practice GetPractice(int practiceID) {
             return _dbContext.Practices
                 .Include(i => i.Attendances)
+                    .ThenInclude(i => i.Member)
                 .FirstOrDefault(p => p.PracticeID == practiceID);
         }
 
@@ -71,6 +72,14 @@ namespace LindyCircleMVC.Models
 
         public bool HasParticipants(Practice practice) {
             return practice.Attendances.Count() > 0;
+        }
+
+        public bool PracticeNumberUsed(int practiceID, int practiceNumber) {
+            if (_dbContext.Practices.FirstOrDefault(p => p.PracticeNumber == practiceNumber) == null)
+                return false;
+            var practice = GetPractice(practiceID);
+            _dbContext.Entry<Practice>(practice).State = EntityState.Detached;
+            return practice.PracticeNumber != practiceNumber;
         }
     }
 }

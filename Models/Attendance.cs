@@ -21,7 +21,7 @@ namespace LindyCircleMVC.Models
                 };
             }
         }
-        [Required, Display(Name = "Amount"), DisplayFormat(DataFormatString = "{0:#0.00}")]
+        [Required, Display(Name = "Amount"), DisplayFormat(DataFormatString = "{0:#,##0.00}")]
         public decimal PaymentAmount { get; set; }
 
         public Member Member { get; set; }

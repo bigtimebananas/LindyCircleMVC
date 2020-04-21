@@ -1,0 +1,95 @@
+﻿@model PracticeDetailsViewModel
+
+<h4>Practice Details</h4>
+
+@if (@TempData["Message"] != null) {
+    <div class="@TempData["Style"]">@TempData["Message"]</div>
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form method="post" asp-action="Edit" asp-route-practice="@Model.Practice">
+            <input type="hidden" asp-for="@Model.Practice.PracticeID" />
+            <input type="hidden" asp-for="@Model.Practice.PracticeDate" />
+            <div class="form-inline">
+                <label asp-for="@Model.Practice.PracticeDate" class="control-label"></label>:
+                @Html.DisplayFor(practice => Model.Practice.PracticeDate)
+            </div>
+            <div class="form-inline">
+                <label asp-for="@Model.Practice.PracticeNumber" class="control-label"></label>&nbsp;
+                <input asp-for="@Model.Practice.PracticeNumber" class="form-control col-md-2" />
+            </div>
+            <div class="form-inline">
+                <label asp-for="@Model.Practice.PracticeTopic" class="control-label"></label>&nbsp;
+                <input asp-for="@Model.Practice.PracticeTopic" class="form-control col-md-10" />
+            </div>
+            <div class="form-inline">
+                <label asp-for="@Model.Practice.PracticeCost" class="control-label"></label>&nbsp;
+                <input asp-for="@Model.Practice.PracticeCost" class="form-control col-md-2" />
+            </div>
+            <div class="form-inline">
+                <label asp-for="@Model.Practice.MiscExpense" class="control-label"></label>&nbsp;
+                <input asp-for="@Model.Practice.MiscExpense" class="form-control col-md-2" />
+            </div>
+            <div class="form-inline">
+                <label asp-for="@Model.Practice.MiscRevenue" class="control-label"></label>&nbsp;
+                <input asp-for="@Model.Practice.MiscRevenue" class="form-control col-md-2" />
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input type="submit" value="Save practice details" class="btn btn-sm btn-secondary" />
+                <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id=@Model.Practice.PracticeID>Delete practice</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <table class="table-striped table-bordered" id="attendees">
+        <caption>Attendees</caption>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Attendances[0].Member.FirstLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Attendances[0].PaymentTypeText)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.Attendances[0].PaymentAmount)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attendance in Model.Attendances) {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Member" asp-route-id=@attendance.MemberID>@Html.DisplayFor(modelItem => attendance.Member.FirstLastName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => attendance.PaymentTypeText)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => attendance.PaymentAmount)
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    @string.Format("Attended: {0}", Model.Attendances.Count())
+                </td>
+                <td>
+                    Collected
+                </td>
+                <td class="text-right">
+                    @Model.Attendances.Sum(s => s.PaymentAmount).ToString("##,#.00")
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div style="padding-top: 10px;">
+    <a asp-action="List">Return to list</a>
+</div>

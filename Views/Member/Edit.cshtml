@@ -1,22 +1,18 @@
 ﻿@model LindyCircleMVC.Models.Member
 
-@{
-    ViewData["Title"] = "Edit Member";
-}
-
 <h4>Change Member Name</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="MemberID" />
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
+            <div class="form-inline">
+                <label asp-for="FirstName" class="control-label"></label>&nbsp;
+                <input asp-for="FirstName" class="form-control col-md-6" />
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
+            <div class="form-inline">
+                <label asp-for="LastName" class="control-label"></label>&nbsp;
+                <input asp-for="LastName" class="form-control col-md-6" />
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -29,4 +25,3 @@
 <div>
     <a asp-action="List">Back to List</a>
 </div>
-

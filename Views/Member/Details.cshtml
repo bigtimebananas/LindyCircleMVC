@@ -10,11 +10,6 @@
     #punchCards {
         margin-left: 10px;
     }
-
-    caption {
-        padding-top: 0px;
-        padding-left: 5px;
-    }
 </style>
 
 <div>
@@ -63,7 +58,7 @@
             @foreach (var practice in Model.Practices) {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => practice.Practice.PracticeDate)
+                        <a asp-action="Details" asp-controller="Practice" asp-route-id=@practice.PracticeID>@Html.DisplayFor(modelItem => practice.Practice.PracticeDate)</a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => practice.PaymentTypeText)

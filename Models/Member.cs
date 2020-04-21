@@ -21,8 +21,7 @@ namespace LindyCircleMVC.Models
         [Display(Name = "Remaining Punches")]
         public int RemainingPunches {
             get {
-                if (PunchCardsHeld == null)
-                    return 0;
+                if (PunchCardsHeld == null) return 0;
                 else return PunchCardsHeld.Sum(t => t.RemainingPunches);
             }
         }
@@ -41,8 +40,7 @@ namespace LindyCircleMVC.Models
         [Display(Name = "Attended")]
         public int TotalAttendance {
             get {
-                if (Attendances == null)
-                    return 0;
+                if (Attendances == null) return 0;
                 else return Attendances.Count;
             }
         }

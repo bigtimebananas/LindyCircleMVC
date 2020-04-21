@@ -17,8 +17,7 @@ namespace LindyCircleMVC.Controllers
             var membersListViewModel = new MembersListViewModel
             {
                 Members = _memberRepository.GetMembers(activeOnly).ToList(),
-                ActiveOnly = activeOnly,
-                Message = TempData["Message"] != null ? TempData["Message"].ToString() : string.Empty
+                ActiveOnly = activeOnly
             };
             ViewBag.Title = "Members";
             return View(membersListViewModel);
@@ -30,6 +29,7 @@ namespace LindyCircleMVC.Controllers
                 return View();
             _memberRepository.AddMember(newMember);
             TempData["Message"] = $"{newMember.FirstLastName} added.";
+            TempData["Style"] = "alert alert-info";
             return RedirectToAction("List", "Member");
         }
 
@@ -50,8 +50,8 @@ namespace LindyCircleMVC.Controllers
             var memberDetailsViewModel = new MemberDetailsViewModel
             {
                 Member = member,
-                Practices = member.Attendances.ToList(),
-                PunchCardsPurchased = member.PunchCardsPurchased.ToList()
+                Practices = member.Attendances.OrderBy(o => o.Practice.PracticeDate).ToList(),
+                PunchCardsPurchased = member.PunchCardsPurchased.OrderBy(o => o.PurchaseDate).ToList()
             };
             return View(memberDetailsViewModel);
         }
@@ -67,7 +67,7 @@ namespace LindyCircleMVC.Controllers
             var member = _memberRepository.GetMember(id);
             if (member == null)
                 return RedirectToAction("List", "Member");
-            ViewBag.Title = member.FirstLastName;
+            ViewBag.Title = $"Edit {member.FirstLastName}";
             return View(member);
         }
 

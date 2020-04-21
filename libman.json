@@ -29,6 +29,10 @@
     {
       "library": "jquery-validate@1.19.1",
       "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "library": "open-iconic@1.1.1",
+      "destination": "wwwroot/open-iconic/"
     }
   ]
 }
