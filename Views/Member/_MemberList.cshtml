@@ -48,8 +48,9 @@
 <script>
     $(document).ready(function () {
         $('#memberTable').DataTable({
-            retrieve: true,
-            deferRender: true,
+            oLanguage: {
+                sSearch: "Search Members"
+            },
             autoWidth: false,
             fixedHeader: true,
             pageLength: 50,

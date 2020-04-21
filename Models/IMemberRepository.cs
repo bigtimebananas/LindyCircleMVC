@@ -8,6 +8,6 @@ namespace LindyCircleMVC.Models
         Member GetMember(int memberID);
         Member UpdateMember(Member member);
         Member AddMember(Member member);
-        Member DeleteMember(Member member);
+        void DeleteMember(Member member);
     }
 }

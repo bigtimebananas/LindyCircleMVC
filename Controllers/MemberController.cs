@@ -1,6 +1,7 @@
 ﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
@@ -15,7 +16,7 @@ namespace LindyCircleMVC.Controllers
         public ViewResult List(bool activeOnly = true) {
             var membersListViewModel = new MembersListViewModel
             {
-                Members = _memberRepository.GetMembers(activeOnly),
+                Members = _memberRepository.GetMembers(activeOnly).ToList(),
                 ActiveOnly = activeOnly,
                 Message = TempData["Message"] != null ? TempData["Message"].ToString() : string.Empty
             };
@@ -27,16 +28,15 @@ namespace LindyCircleMVC.Controllers
         public IActionResult List(Member newMember) {
             if (!ModelState.IsValid)
                 return View();
-
             _memberRepository.AddMember(newMember);
             TempData["Message"] = $"{newMember.FirstLastName} added.";
             return RedirectToAction("List", "Member");
         }
 
-        public IActionResult GetPartial(bool activeOnly) {
+        public PartialViewResult GetPartial(bool activeOnly) {
             var membersListViewModel = new MembersListViewModel
             {
-                Members = _memberRepository.GetMembers(activeOnly),
+                Members = _memberRepository.GetMembers(activeOnly).ToList(),
                 ActiveOnly = activeOnly
             };
             return PartialView("_MemberList", membersListViewModel);
@@ -47,7 +47,13 @@ namespace LindyCircleMVC.Controllers
             if (member == null)
                 return RedirectToAction("List", "Member");
             ViewBag.Title = member.FirstLastName;
-            return View(member);
+            var memberDetailsViewModel = new MemberDetailsViewModel
+            {
+                Member = member,
+                Practices = member.Attendances.ToList(),
+                PunchCardsPurchased = member.PunchCardsPurchased.ToList()
+            };
+            return View(memberDetailsViewModel);
         }
 
         [HttpPost]
@@ -67,6 +73,8 @@ namespace LindyCircleMVC.Controllers
 
         [HttpPost]
         public IActionResult Edit(Member member) {
+            if (!ModelState.IsValid)
+                return View();
             _memberRepository.UpdateMember(member);
             return RedirectToAction("Details", "Member", new { id = member.MemberID });
         }

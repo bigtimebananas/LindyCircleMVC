@@ -1,6 +1,6 @@
-﻿@model Member
+﻿@model MemberDetailsViewModel
 
-@{var buttonText = @Model.Inactive ? "Make Active" : "Make Inactive";}
+@{var buttonText = @Model.Member.Inactive ? "Make Active" : "Make Inactive";}
 
 <style type="text/css">
     table {
@@ -19,24 +19,24 @@
 
 <div>
     <form id="details" asp-action="ToggleActive" method="post">
-        <input type="hidden" asp-for="@Model.MemberID" />
-        <input type="hidden" asp-for="@Model.FirstName" />
-        <input type="hidden" asp-for="@Model.LastName" />
-        <input type="hidden" asp-for="@Model.Inactive" />
+        <input type="hidden" asp-for="@Model.Member.MemberID" />
+        <input type="hidden" asp-for="@Model.Member.FirstName" />
+        <input type="hidden" asp-for="@Model.Member.LastName" />
+        <input type="hidden" asp-for="@Model.Member.Inactive" />
         <dl>
             <dd>
-                Member: @Model.FirstLastName
+                Member: @Model.Member.FirstLastName
                 &nbsp;
-                <a asp-action="Edit" asp-route-id=@Model.MemberID class="btn btn-sm btn-dark">Change name</a>
+                <a asp-action="Edit" asp-route-id=@Model.Member.MemberID class="btn btn-sm btn-dark">Change name</a>
             </dd>
             <dd>
-                Unused punches: @Model.RemainingPunches
+                Unused punches: @Model.Member.RemainingPunches
             </dd>
             <dd>
-                Total paid: @Model.TotalPaid
+                Total paid: @Model.Member.TotalPaid
             </dd>
             <dd>
-                Status: @Model.ActiveText
+                Status: @Model.Member.ActiveText
                 &nbsp;
                 <input type="submit" value="@buttonText" class="btn btn-sm btn-dark" />
             </dd>
@@ -49,18 +49,18 @@
         <thead>
             <tr>
                 <th>
-                    Practice Date
+                    @Html.DisplayNameFor(model => model.Practices[0].Practice.PracticeDate)
                 </th>
                 <th>
-                    Payment Type
+                    @Html.DisplayNameFor(model => model.Practices[0].PaymentType)
                 </th>
                 <th class="text-right">
-                    Payment Amount
+                    @Html.DisplayNameFor(model => model.Practices[0].PaymentAmount)
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var practice in Model.Attendances) {
+            @foreach (var practice in Model.Practices) {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => practice.Practice.PracticeDate)
@@ -77,8 +77,8 @@
         <tfoot>
             <tr>
                 <td>Total Attended</td>
-                <td>@Model.TotalAttendance</td>
-                <td class="text-right">@Model.Attendances.Sum(s => s.PaymentAmount)</td>
+                <td>@Model.Member.TotalAttendance</td>
+                <td class="text-right">@Model.Practices.Sum(s => s.PaymentAmount)</td>
             </tr>
         </tfoot>
     </table>
@@ -87,10 +87,10 @@
         <thead>
             <tr>
                 <th>
-                    Purchase Date
+                    @Html.DisplayNameFor(model => model.PunchCardsPurchased[0].PurchaseDate)
                 </th>
                 <th class="text-right">
-                    Amount
+                    @Html.DisplayNameFor(model => model.PunchCardsPurchased[0].PurchaseAmount)
                 </th>
             </tr>
         </thead>

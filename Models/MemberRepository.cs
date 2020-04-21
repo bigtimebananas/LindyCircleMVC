@@ -30,27 +30,6 @@ namespace LindyCircleMVC.Models
                 .Include(i => i.PunchCardsPurchased)
                 .FirstOrDefault(m => m.MemberID == memberID);
 
-        public Member UpdateMember(Member member) {
-            _dbContext.Attach(member).State = EntityState.Modified;
-
-            try {
-                 _dbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException) {
-                if (!MemberExists(member.MemberID)) {
-                    return null;
-                }
-                else {
-                    throw;
-                }
-            }
-            return member;
-        }
-
-        private bool MemberExists(int memberID) {
-            return _dbContext.Members.Find(memberID) != null;
-        }
-
         public Member AddMember(Member member) {
             member.Inactive = false;
             _dbContext.Members.Add(member);
@@ -58,13 +37,28 @@ namespace LindyCircleMVC.Models
             return member;
         }
 
-        public Member DeleteMember(Member member) {
+        public Member UpdateMember(Member member) {
+            _dbContext.Attach(member).State = EntityState.Modified;
+            try {
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException) {
+                if (!MemberExists(member.MemberID))
+                    return null;
+                else throw;
+            }
+            return member;
+        }
+
+        public void DeleteMember(Member member) {
             if (MemberExists(member.MemberID)) {
                 _dbContext.Members.Remove(member);
                 _dbContext.SaveChanges();
-                return member;
             }
-            return null;
+        }
+
+        private bool MemberExists(int memberID) {
+            return _dbContext.Members.Find(memberID) != null;
         }
     }
 }
