@@ -1,0 +1,81 @@
+﻿@model PunchCardListViewModel
+
+@if (TempData["Message"] != null) {
+    <div class="@TempData["Style"]">@TempData["Message"]</div>
+}
+
+@if (Model.PunchCards.Count == 0) {
+    <p>This member has not purchased any punch cards.</p>
+}
+else {
+    <table id="punchCardTable" class="table table-bordered table-striped table-sm">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PunchCards[0].PurchaseDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PunchCards[0].PurchaseAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PunchCards[0].RemainingPunches)
+                </th>
+                <th>
+                    Transferred To/From
+                </th>
+                <th>Transfer</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var punchCard in Model.PunchCards) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => punchCard.PurchaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => punchCard.PurchaseAmount)
+                    </td>
+                    <td>
+                        @if (punchCard.CurrentMemberID == Model.SelectedMember.MemberID) {
+                            @Html.DisplayFor(modelItem => punchCard.RemainingPunches);
+                        }
+                        else {
+                            <span>0</span>
+                        }
+                    </td>
+                    <td>
+                        @if (punchCard.CurrentMemberID != punchCard.PurchaseMemberID) {
+                            @if (punchCard.CurrentMemberID == Model.SelectedMember.MemberID) {
+                                @Html.DisplayFor(modelItem => punchCard.PurchaseMember.FirstLastName);
+                            }
+                            else {
+                                @Html.DisplayFor(modelItem => punchCard.CurrentMember.FirstLastName);
+                            }
+                        }
+                        else {
+                            <span></span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <span class="oi oi-transfer"></span>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="Delete" asp-controller="PunchCard" asp-route-punchCardID=@punchCard.PunchCardID 
+                           asp-route-memberID=@Model.SelectedMember.MemberID><span class="oi oi-trash"></span></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total: @Model.PunchCards.Count()</td>
+                <td>@Model.PunchCards.Sum(s => s.PurchaseAmount).ToString("#,##.00")</td>
+                <td>@Model.PunchCards.Where(p => p.CurrentMemberID == Model.SelectedMember.MemberID).Sum(s => s.RemainingPunches)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+}

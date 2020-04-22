@@ -14,7 +14,8 @@ namespace LindyCircleMVC.Models
         [Required, Display(Name = "Amount"), DisplayFormat(DataFormatString = "{0:#0.00}")]
         public decimal PurchaseAmount { get; set; }
         [Display(Name = "Remaining Punches")]
-        public int RemainingPunches { get { return 5 - PunchCardUsages.Count; } }
+        public int RemainingPunches =>
+            PunchCardUsages == null ? 5 : 5 - PunchCardUsages.Count;
 
         public Member CurrentMember { get; set; }
         public Member PurchaseMember { get; set; }

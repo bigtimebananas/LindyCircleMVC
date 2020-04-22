@@ -1,0 +1,44 @@
+﻿@model PunchCardIndexViewModel
+
+<h4>Punch Cards</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <span class="col-form-label">Member</span>
+        <input type="hidden" id="selectedMemberID" asp-for="SelectedMemberID" />
+        @Html.DropDownList("selectMembers", Model.Members, new { @class = "col-md-auto", id = "selectMembers" })
+    </div>
+    <div class="col-md-8">
+        <form name="form1" method="post" asp-action="Purchase">
+            <input type="hidden" id="hidMemberID" asp-for=NewPunchCard.PurchaseMemberID />
+            <label asp-for="NewPunchCard.PurchaseDate" class="col-form-label"></label>
+            <input asp-for="NewPunchCard.PurchaseDate" class="col-md-auto" />
+            <label asp-for="NewPunchCard.PurchaseAmount" class="col-form-label"></label>
+            <input asp-for="NewPunchCard.PurchaseAmount" class="col-md-2" />
+            <input type="submit" class="btn btn-sm btn-secondary" value="Purchase Card" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </form>
+    </div>
+
+    <div id="punchCards" class="col-md-7">
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if ($('#selectedMemberID').val() != 0)
+                $('#selectMembers').val($('#selectedMemberID').val());
+            var memberID = $('#selectMembers option:selected').val();
+            $('#hidMemberID').val(memberID);
+            $('#punchCards').load('/PunchCard/GetPartial', { memberID: memberID });
+        });
+        $('#selectMembers').change(function () {
+            var memberID = $('#selectMembers option:selected').val();
+            $('#hidMemberID').val(memberID);
+            $('#punchCards').load('/PunchCard/GetPartial', { memberID: memberID });
+        });
+    </script>
+}

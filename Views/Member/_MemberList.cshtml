@@ -1,4 +1,4 @@
-﻿@model MembersListViewModel
+﻿@model IList<Member>
 
 <table id="memberTable" class="table table-bordered table-striped table-sm">
     <thead>
@@ -7,21 +7,21 @@
                 MemberID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Members[0].FirstLastName)
+                @Html.DisplayNameFor(model => model[0].FirstLastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Members[0].TotalAttendance)
+                @Html.DisplayNameFor(model => model[0].TotalAttendance)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Members[0].RemainingPunches)
+                @Html.DisplayNameFor(model => model[0].RemainingPunches)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Members[0].ActiveText)
+                @Html.DisplayNameFor(model => model[0].ActiveText)
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var member in Model.Members) {
+        @foreach (var member in Model) {
             <tr>
                 <td>
                     @member.MemberID

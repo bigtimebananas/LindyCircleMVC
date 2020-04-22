@@ -16,7 +16,6 @@ namespace LindyCircleMVC.Controllers
         public ViewResult List(bool activeOnly = true) {
             var membersListViewModel = new MembersListViewModel
             {
-                Members = _memberRepository.GetMembers(activeOnly).ToList(),
                 ActiveOnly = activeOnly
             };
             ViewBag.Title = "Members";
@@ -34,12 +33,8 @@ namespace LindyCircleMVC.Controllers
         }
 
         public PartialViewResult GetPartial(bool activeOnly) {
-            var membersListViewModel = new MembersListViewModel
-            {
-                Members = _memberRepository.GetMembers(activeOnly).ToList(),
-                ActiveOnly = activeOnly
-            };
-            return PartialView("_MemberList", membersListViewModel);
+            var members = _memberRepository.GetMembers(activeOnly).ToList();
+            return PartialView("_MemberList", members);
         }
 
         public IActionResult Details(int id) {

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,33 @@ namespace LindyCircleMVC.Models
                 .Where(m => !m.Inactive || m.Inactive != activeOnly)
                 .OrderBy(o => o.FirstName)
                     .ThenBy(o => o.LastName);
+
+        public IList<SelectListItem> GetMemberList() {
+            var selectList = new List<SelectListItem>();
+            foreach (var member in _dbContext.Members
+                .OrderBy(o => o.FirstName)
+                    .ThenBy(o => o.LastName))
+                selectList.Add(new SelectListItem
+                {
+                    Value = member.MemberID.ToString(),
+                    Text = member.FirstLastName
+                });
+            return selectList;
+        }
+
+        public IList<SelectListItem> GetTransferMemberList(int memberID) {
+            var selectList = new List<SelectListItem>();
+            foreach (var member in _dbContext.Members
+                .Where(m => m.MemberID != memberID)
+                .OrderBy(o => o.FirstName)
+                    .ThenBy(o => o.LastName))
+                selectList.Add(new SelectListItem
+                {
+                    Value = member.MemberID.ToString(),
+                    Text = member.FirstLastName
+                });
+            return selectList;
+        }
 
         public Member GetMember(int memberID) =>
             _dbContext.Members

@@ -19,23 +19,16 @@ namespace LindyCircleMVC.Models
                 .Include(i => i.CurrentMember)
                 .FirstOrDefault(p => p.PunchCardID == punchCardID);
 
-        public IEnumerable<PunchCard> GetPunchCardsHeldByMember(int memberID) =>
+        public IEnumerable<PunchCard> GetPunchCardsByMember(int memberID) =>
             _dbContext.PunchCards
                 .Include(i => i.PunchCardUsages)
                     .ThenInclude(i => i.Attendance)
                 .Include(i => i.PurchaseMember)
                 .Include(i => i.CurrentMember)
-                .Where(p => p.CurrentMemberID == memberID);
-
-        public IEnumerable<PunchCard> GetPunchCardsPurchasedByMember(int memberID) =>
-            _dbContext.PunchCards
-                .Include(i => i.PunchCardUsages)
-                    .ThenInclude(i => i.Attendance)
-                .Include(i => i.PurchaseMember)
-                .Include(i => i.CurrentMember)
-                .Where(p => p.PurchaseMemberID == memberID);
+                .Where(p => p.CurrentMemberID == memberID || p.PurchaseMemberID == memberID);
 
         public PunchCard PurchasePunchCard(PunchCard punchCard) {
+            punchCard.CurrentMemberID = punchCard.PurchaseMemberID;
             _dbContext.PunchCards.Add(punchCard);
             _dbContext.SaveChanges();
             return punchCard;
