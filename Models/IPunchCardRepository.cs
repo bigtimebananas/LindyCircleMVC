@@ -9,5 +9,6 @@ namespace LindyCircleMVC.Models
         PunchCard PurchasePunchCard(PunchCard punchCard);
         PunchCard TransferPunchCard(PunchCard punchCard);
         void DeletePunchCard(PunchCard punchCard);
+        void DeletePunchCard(int punchCardID);
     }
 }

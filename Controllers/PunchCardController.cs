@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LindyCircleMVC.Models;
+﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
@@ -38,31 +35,49 @@ namespace LindyCircleMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Purchase(PunchCard newPunchCard) {
-            TempData["SelectedMemberID"] = newPunchCard.PurchaseMemberID;
+        public IActionResult Purchase(PunchCard newPunchCard, string ddlSelectMembers) {
+            var memberID = int.Parse(ddlSelectMembers);
+            newPunchCard.PurchaseMemberID = memberID;
+            TempData["SelectedMemberID"] = memberID;
             _punchCardRepository.PurchasePunchCard(newPunchCard);
             return RedirectToAction("Index", "PunchCard");
         }
 
-        public PartialViewResult GetPartial(int memberID) {
+        public PartialViewResult GetPartial(int selectedMemberID) {
             var punchCardListViewModel = new PunchCardListViewModel
             {
-                PunchCards = _punchCardRepository.GetPunchCardsByMember(memberID).ToList(),
-                SelectedMember = _memberRepository.GetMember(memberID)
+                PunchCards = _punchCardRepository.GetPunchCardsByMember(selectedMemberID).ToList(),
+                SelectedMember = _memberRepository.GetMember(selectedMemberID)
             };
             return PartialView("_PunchCardList", punchCardListViewModel);
         }
 
         public IActionResult Delete(int punchCardID, int memberID) {
-            var punchCard = _punchCardRepository.GetPunchCard(punchCardID);
-            if (punchCard.RemainingPunches < 5)
-                TempData["Message"] = "Unable to delete used punch card.";
-            else {
-                _punchCardRepository.DeletePunchCard(punchCard);
-                TempData["Message"] = "Punch card deleted.";
-            }
-                TempData["Style"] = "alert alert-danger";
-                TempData["SelectedMemberID"] = memberID;
+            _punchCardRepository.DeletePunchCard(punchCardID);
+            TempData["Message"] = "Punch card deleted.";
+            TempData["Style"] = "alert alert-danger";
+            TempData["SelectedMemberID"] = memberID;
+            return RedirectToAction("Index", "PunchCard");
+        }
+
+        public ViewResult Transfer(int punchCardID, int memberID) {
+            var punchCardTransferViewModel = new PunchCardTransferViewModel
+            {
+                CurrentMember = _memberRepository.GetMember(memberID),
+                PunchCard = _punchCardRepository.GetPunchCard(punchCardID),
+                TransferMembers = _memberRepository.GetTransferMemberList(memberID)
+            };
+            ViewBag.Title = "Transfer Punch Card";
+            return View(punchCardTransferViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Transfer(PunchCard punchCard, string ddlTransferMembers) {
+            punchCard.CurrentMemberID = int.Parse(ddlTransferMembers);
+            TempData["SelectedMemberID"] = punchCard.CurrentMemberID;
+            _punchCardRepository.TransferPunchCard(punchCard);
+            TempData["Message"] = "Punch card transferred.";
+            TempData["Style"] = "alert alert-info";
             return RedirectToAction("Index", "PunchCard");
         }
     }

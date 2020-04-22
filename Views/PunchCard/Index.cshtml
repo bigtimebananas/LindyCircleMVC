@@ -5,18 +5,19 @@
 
 <div class="row">
     <div class="col-md-10">
-        <span class="col-form-label">Member</span>
-        <input type="hidden" id="selectedMemberID" asp-for="SelectedMemberID" />
-        @Html.DropDownList("selectMembers", Model.Members, new { @class = "col-md-auto", id = "selectMembers" })
-    </div>
-    <div class="col-md-8">
         <form name="form1" method="post" asp-action="Purchase">
-            <input type="hidden" id="hidMemberID" asp-for=NewPunchCard.PurchaseMemberID />
-            <label asp-for="NewPunchCard.PurchaseDate" class="col-form-label"></label>
-            <input asp-for="NewPunchCard.PurchaseDate" class="col-md-auto" />
-            <label asp-for="NewPunchCard.PurchaseAmount" class="col-form-label"></label>
-            <input asp-for="NewPunchCard.PurchaseAmount" class="col-md-2" />
-            <input type="submit" class="btn btn-sm btn-secondary" value="Purchase Card" />
+            <div>
+                <span class="col-form-label">Member</span>
+                @Html.DropDownList("ddlSelectMembers", Model.Members, new { @class = "col-md-auto", id = "ddlSelectMembers" })
+                <input type="hidden" id="selectedMemberID" asp-for="SelectedMemberID" />
+            </div>
+            <div>
+                <label asp-for="NewPunchCard.PurchaseDate" class="col-form-label"></label>
+                <input asp-for="NewPunchCard.PurchaseDate" class="col-md-auto" />
+                <label asp-for="NewPunchCard.PurchaseAmount" class="col-form-label"></label>
+                <input asp-for="NewPunchCard.PurchaseAmount" class="col-md-2" />
+                <input type="submit" class="btn btn-sm btn-secondary" value="Purchase Card" />
+            </div>
             <div asp-validation-summary="All" class="text-danger"></div>
         </form>
     </div>
@@ -30,15 +31,13 @@
     <script>
         $(document).ready(function () {
             if ($('#selectedMemberID').val() != 0)
-                $('#selectMembers').val($('#selectedMemberID').val());
-            var memberID = $('#selectMembers option:selected').val();
-            $('#hidMemberID').val(memberID);
-            $('#punchCards').load('/PunchCard/GetPartial', { memberID: memberID });
+                $('#ddlSelectMembers').val($('#selectedMemberID').val());
+            $('#punchCards').load('/PunchCard/GetPartial',
+                { selectedMemberID: $('#ddlSelectMembers option:selected').val() });
         });
-        $('#selectMembers').change(function () {
-            var memberID = $('#selectMembers option:selected').val();
-            $('#hidMemberID').val(memberID);
-            $('#punchCards').load('/PunchCard/GetPartial', { memberID: memberID });
+        $('#ddlSelectMembers').change(function () {
+            $('#punchCards').load('/PunchCard/GetPartial',
+                { selectedMemberID: $('#ddlSelectMembers option:selected').val() });
         });
     </script>
 }

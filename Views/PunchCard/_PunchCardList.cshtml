@@ -23,8 +23,7 @@ else {
                 <th>
                     Transferred To/From
                 </th>
-                <th>Transfer</th>
-                <th>Delete</th>
+                <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -58,11 +57,18 @@ else {
                         }
                     </td>
                     <td class="text-center">
-                        <span class="oi oi-transfer"></span>
-                    </td>
-                    <td class="text-center">
-                        <a asp-action="Delete" asp-controller="PunchCard" asp-route-punchCardID=@punchCard.PunchCardID 
-                           asp-route-memberID=@Model.SelectedMember.MemberID><span class="oi oi-trash"></span></a>
+                        @if (punchCard.RemainingPunches > 0) {
+                            <a asp-action="Transfer" asp-controller="PunchCard" asp-route-punchCardID=@punchCard.PunchCardID
+                               asp-route-memberID=@Model.SelectedMember.MemberID>
+                                <span class="oi oi-transfer"></span>
+                            </a>
+                        }
+                        @if (punchCard.RemainingPunches == 5) {
+                            <a asp-action="Delete" asp-controller="PunchCard" asp-route-punchCardID=@punchCard.PunchCardID
+                               asp-route-memberID=@Model.SelectedMember.MemberID>
+                                <span class="oi oi-trash" style="padding-left: 10px;"></span>
+                            </a>
+                        }
                     </td>
                 </tr>
             }
@@ -72,7 +78,6 @@ else {
                 <td>Total: @Model.PunchCards.Count()</td>
                 <td>@Model.PunchCards.Sum(s => s.PurchaseAmount).ToString("#,##.00")</td>
                 <td>@Model.PunchCards.Where(p => p.CurrentMemberID == Model.SelectedMember.MemberID).Sum(s => s.RemainingPunches)</td>
-                <td></td>
                 <td></td>
                 <td></td>
             </tr>

@@ -55,6 +55,15 @@ namespace LindyCircleMVC.Models
             }
         }
 
+        public void DeletePunchCard(int punchCardID) {
+            var punchCard = _dbContext.PunchCards.Find(punchCardID);
+            if (PunchCardExists(punchCardID) &&
+                punchCard.RemainingPunches == 5) {
+                _dbContext.PunchCards.Remove(punchCard);
+                _dbContext.SaveChanges();
+            }
+        }
+
         private bool PunchCardExists(int punchCardID) => _dbContext.PunchCards.Find(punchCardID) != null;
     }
 }

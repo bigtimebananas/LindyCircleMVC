@@ -1,0 +1,24 @@
+﻿@model PunchCardTransferViewModel
+
+<h4>Transfer Punch Card</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form method="post" asp-action="Transfer">
+            <div>
+                <input id="punchCardID" type="hidden" asp-for="@Model.PunchCard.PunchCardID" />
+                <input id="purchaseMemberID" type="hidden" asp-for="@Model.PunchCard.PurchaseMemberID" />
+                <input id="purchaseDate" type="hidden" asp-for="@Model.PunchCard.PurchaseDate" />
+                <input id="purchaseAmount" type="hidden" asp-for="@Model.PunchCard.PurchaseAmount" />
+                <label class="col-form-label">Current card holder: @Model.CurrentMember.FirstLastName</label>
+            </div>
+            <div>
+                <label class="col-form-label">Transfer card with @Model.PunchCard.RemainingPunches punches to </label>
+                @Html.DropDownList("ddlTransferMembers", Model.TransferMembers, new { @class = "col-md-auto", id = "transferMembers" })
+                <input type="submit" value="Transfer" class="btn btn-sm btn-primary" />
+                <a class="btn btn-sm btn-secondary" asp-action="Index" asp-controller="PunchCard">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
