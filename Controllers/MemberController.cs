@@ -13,10 +13,10 @@ namespace LindyCircleMVC.Controllers
             _memberRepository = memberRepository;
         }
 
-        public ViewResult List(bool activeOnly = true) {
+        public ViewResult List() {
             var membersListViewModel = new MembersListViewModel
             {
-                ActiveOnly = activeOnly
+                ActiveOnly = true
             };
             ViewBag.Title = "Members";
             return View(membersListViewModel);

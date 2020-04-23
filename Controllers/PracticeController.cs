@@ -13,21 +13,14 @@ namespace LindyCircleMVC.Controllers
             _practiceRepository = practiceRepository;
         }
 
-        public IActionResult List(DateTime? startDate, DateTime? endDate) {
-            var practiceListViewModel = new PracticeListViewModel
-            {
-                Practices = _practiceRepository.SearchPractices(startDate, endDate).ToList()
-            };
+        public ViewResult List() {
             ViewBag.Title = "Practices";
-            return View(practiceListViewModel);
+            return View();
         }
 
         public PartialViewResult GetPartial(DateTime? startDate, DateTime? endDate) {
-            var practiceListViewModel = new PracticeListViewModel
-            {
-                Practices = _practiceRepository.SearchPractices(startDate, endDate).ToList()
-            };
-            return PartialView("_PracticeList", practiceListViewModel);
+            var practices = _practiceRepository.SearchPractices(startDate, endDate).ToList();
+            return PartialView("_PracticeList", practices);
         }
 
         public IActionResult Details(int id) {

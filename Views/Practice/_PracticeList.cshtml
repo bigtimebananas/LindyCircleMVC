@@ -1,4 +1,4 @@
-﻿@model PracticeListViewModel
+﻿@model IList<Practice>
 
 <table id="practiceTable" class="table table-bordered table-striped table-sm">
     <thead>
@@ -7,33 +7,33 @@
                 PracticeID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Practices[0].PracticeNumber)
+                @Html.DisplayNameFor(model => model[0].PracticeNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Practices[0].PracticeDate)
+                @Html.DisplayNameFor(model => model[0].PracticeDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Practices[0].PracticeTopic)
+                @Html.DisplayNameFor(model => model[0].PracticeTopic)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].PracticeCost)
+                @Html.DisplayNameFor(model => model[0].PracticeCost)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].AttendanceRevenue)
+                @Html.DisplayNameFor(model => model[0].AttendanceRevenue)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].MiscExpense)
+                @Html.DisplayNameFor(model => model[0].MiscExpense)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].MiscRevenue)
+                @Html.DisplayNameFor(model => model[0].MiscRevenue)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].AttendeeCount)
+                @Html.DisplayNameFor(model => model[0].AttendeeCount)
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var practice in Model.Practices) {
+        @foreach (var practice in Model) {
             <tr>
                 <td>
                     @practice.PracticeID
@@ -72,19 +72,19 @@
                 Totals
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(s => s.PracticeCost).ToString("#,##0.00")
+                @Model.Sum(s => s.PracticeCost).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(s => s.AttendanceRevenue).ToString("#,##0.00")
+                @Model.Sum(s => s.AttendanceRevenue).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(s => s.MiscExpense).ToString("#,##0.00")
+                @Model.Sum(s => s.MiscExpense).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(s => s.MiscRevenue).ToString("#,##0.00")
+                @Model.Sum(s => s.MiscRevenue).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(s => s.AttendeeCount)
+                @Model.Sum(s => s.AttendeeCount)
             </td>
         </tr>
     </tfoot>

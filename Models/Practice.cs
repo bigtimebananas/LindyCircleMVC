@@ -11,6 +11,7 @@ namespace LindyCircleMVC.Models
         public int PracticeID { get; set; }
         [Required, Display(Name = "Practice Date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime PracticeDate { get; set; }
+        public string PracticeDateString => PracticeDate.ToString("yyyy-MM-dd");
         [Required, Display(Name = "Practice Number")]
         public int PracticeNumber { get; set; }
         [Required, Display(Name = "Rental Cost"), DisplayFormat(DataFormatString = "{0:#,##0.00}")]

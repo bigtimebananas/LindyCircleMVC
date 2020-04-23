@@ -1,0 +1,67 @@
+﻿@model HistoryIndexViewModel
+
+<div class="col-md-12" id="attendanceChart">
+</div>
+
+<script type="text/javascript">
+    //Swap these out when Material Line charts have all options
+    google.charts.load('current', { packages: ['corechart'] });
+    //google.charts.load('current', { packages: ['line'] });
+    google.charts.setOnLoadCallback(getData);
+    function getData() {
+        $.ajax({
+            type: 'GET',
+            contentType: "application/JSON; charset=utf-8",
+            dataType: 'JSON',
+            url: '/History/GetData?startDate=@Model.StartDate&endDate=@Model.EndDate',
+            success: function (response) {
+                drawChart(response);
+            }
+        });
+    }
+
+    function drawChart(dataValues) {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('date', 'Practice Date');
+        data.addColumn('number', 'Attendance');
+
+        for (var i = 0; i < dataValues.length; i++) {
+            data.addRow([new Date(dataValues[i].practiceDateString), dataValues[i].attendeeCount]);
+        }
+
+        var attendanceRange = data.getColumnRange(1);
+        var vTicks = [];
+        for (var i = 0; i <= attendanceRange.max + 1; i++) {
+            vTicks.push(i);
+        }
+
+        var options = {
+            title: 'Practice Attendance',
+            legend: { position: 'none', },
+            height: 600,
+            crosshair: { trigger: 'both' },
+            hAxis: {
+                title: 'Practice Date',
+                format: 'yyyy-MM-dd',
+                slantedText: true,
+                slantedTextAngle: 60,
+                showTextEvery: 2
+            },
+            vAxis: {
+                title: 'Attendance',
+                gridlines: { interval: 1 },
+                ticks: vTicks
+            },
+            pointsVisible: true,
+            pointShape: 'diamond',
+            pointSize: 10
+        };
+
+        //Swap these out when Material Line charts have all options
+        var chart = new google.visualization.LineChart(document.getElementById('attendanceChart'));
+        chart.draw(data, options);
+        //var chart = new google.charts.Line(document.getElementById('attendanceChart'));
+        //chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+</script>

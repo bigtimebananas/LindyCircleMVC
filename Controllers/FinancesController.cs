@@ -1,5 +1,4 @@
 ﻿using LindyCircleMVC.Models;
-using LindyCircleMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,28 +17,18 @@ namespace LindyCircleMVC.Controllers
         }
         public ViewResult Index()
         {
-            var practices = _practiceRepository.AllPractices.OrderBy(o => o.PracticeDate);
-            var practiceList = GetPracticeDetails(practices.ToList());
-            var financesIndexViewModel = new FinancesIndexViewModel
-            {
-                Practices = practiceList
-            };
             ViewBag.Title = "Finances";
-            return View(financesIndexViewModel);
+            return View();
         }
 
         public PartialViewResult GetPartial(DateTime? startDate, DateTime? endDate) {
             var practices = _practiceRepository.AllPractices.OrderBy(o => o.PracticeDate);
-            if (startDate != null)
-                practices = practices.Where(p => p.PracticeDate >= startDate.Value).OrderBy(o => o.PracticeDate);
-            if (endDate != null)
-                practices = practices.Where(p => p.PracticeDate <= endDate.Value).OrderBy(o => o.PracticeDate);
             var practiceList = GetPracticeDetails(practices.ToList());
-            var financesIndexViewModel = new FinancesIndexViewModel
-            {
-                Practices = practiceList
-            };
-            return PartialView("_Details", financesIndexViewModel);
+            if (startDate != null)
+                practiceList = practiceList.Where(p => p.PracticeDate >= startDate.Value).ToList();
+            if (endDate != null)
+                practiceList = practiceList.Where(p => p.PracticeDate <= endDate.Value).ToList();
+            return PartialView("_Details", practiceList);
         }
 
         private List<Practice> GetPracticeDetails(List<Practice> practices) {

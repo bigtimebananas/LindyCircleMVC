@@ -29,32 +29,13 @@
 
 @section scripts{
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
     <script>
         $(document).ready(function () {
-            var activeOnly = document.getElementById('activeOnly').checked;
+            var activeOnly = $('#activeOnly').is(':checked');
             $('#members').load('/Member/GetPartial', { activeOnly: activeOnly });
-            $('#memberTable').DataTable({
-                oLanguage: {
-                    sSearch: "Search Members"
-                },
-                autoWidth: false,
-                fixedHeader: true,
-                pageLength: 50,
-                columns: [
-                    { visible: false },
-                    null,
-                    { searchable: false },
-                    { searchable: false, orderable: false },
-                    { searchable: false, orderable: false }
-                ],
-                rowId: 'MemberID',
-                order: [[1, "asc"]]
-            });
         });
         $('#activeOnly').click(function () {
-            var activeOnly = document.getElementById('activeOnly').checked;
+            var activeOnly = $('#activeOnly').is(':checked');
             $('#members').load('/Member/GetPartial', { activeOnly: activeOnly });
         });
     </script>

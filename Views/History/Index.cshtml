@@ -1,4 +1,4 @@
-﻿@model FinancesIndexViewModel
+﻿@model HistoryIndexViewModel
 
 <div class="row">
     <div class="col-md-10">
@@ -11,20 +11,22 @@
             <button class="btn btn-sm btn-dark" id="btnFilter">Filter</button>
         </div>
     </div>
-    <div class="col-md-12" id="financeDetails">
+    <div class="col-md-12" id="history">
     </div>
 </div>
 
 @section scripts{
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
     <script>
-        $('document').ready(function () {
-            $('#financeDetails').load('/Finances/GetPartial');
+        $(document).ready(function () {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            $('#history').load('/History/GetPartial', { startDate: startDate, endDate: endDate });
         });
         $('#btnFilter').click(function () {
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
-            $('#financeDetails').load('/Finances/GetPartial', { startDate, endDate });
+            $('#history').load('/History/GetPartial', { startDate: startDate, endDate: endDate });
         });
     </script>
 }

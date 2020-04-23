@@ -1,28 +1,28 @@
-﻿@model FinancesIndexViewModel
+﻿@model IList<Practice>
 
 <table id="financesTable" class="table table-bordered table-striped table-sm">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Practices[0].PracticeDate)
+                @Html.DisplayNameFor(model => model[0].PracticeDate)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].PracticeCost)
+                @Html.DisplayNameFor(model => model[0].PracticeCost)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].AttendanceRevenue)
+                @Html.DisplayNameFor(model => model[0].AttendanceRevenue)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].MiscExpense)
+                @Html.DisplayNameFor(model => model[0].MiscExpense)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].MiscRevenue)
+                @Html.DisplayNameFor(model => model[0].MiscRevenue)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].PunchCardsSold)
+                @Html.DisplayNameFor(model => model[0].PunchCardsSold)
             </th>
             <th class="text-right">
-                @Html.DisplayNameFor(model => model.Practices[0].PunchCardRevenue)
+                @Html.DisplayNameFor(model => model[0].PunchCardRevenue)
             </th>
             <th class="text-right">
                 Line Total
@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var practice in Model.Practices) {
+        @foreach (var practice in Model) {
             <tr>
                 <td>
                     <a asp-action="Details" asp-controller="Practice" asp-route-id=@practice.PracticeID>@Html.DisplayFor(modelItem => practice.PracticeDate)</a>
@@ -60,7 +60,7 @@
                     @Html.DisplayFor(modelItem => practice.PracticeTotal)
                 </td>
                 <td class="text-right">
-                    @Model.Practices.Where(p => p.PracticeDate <= practice.PracticeDate).Sum(s => s.PracticeTotal)
+                    @Model.Where(p => p.PracticeDate <= practice.PracticeDate).Sum(s => s.PracticeTotal)
                 </td>
             </tr>
         }
@@ -71,28 +71,28 @@
                 Totals
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.PracticeCost).ToString("#,##0.00")
+                @Model.Sum(p => p.PracticeCost).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.AttendanceRevenue).ToString("#,##0.00")
+                @Model.Sum(p => p.AttendanceRevenue).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.MiscExpense).ToString("#,##0.00")
+                @Model.Sum(p => p.MiscExpense).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.MiscRevenue).ToString("#,##0.00")
+                @Model.Sum(p => p.MiscRevenue).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.PunchCardsSold).ToString()
+                @Model.Sum(p => p.PunchCardsSold).ToString()
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.PunchCardRevenue).ToString("#,##0.00")
+                @Model.Sum(p => p.PunchCardRevenue).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.PracticeTotal).ToString("#,##0.00")
+                @Model.Sum(p => p.PracticeTotal).ToString("#,##0.00")
             </td>
             <td class="text-right">
-                @Model.Practices.Sum(p => p.PracticeTotal).ToString("#,##0.00")
+                @Model.Sum(p => p.PracticeTotal).ToString("#,##0.00")
             </td>
         </tr>
     </tfoot>

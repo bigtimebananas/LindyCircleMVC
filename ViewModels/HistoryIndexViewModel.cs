@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LindyCircleMVC.ViewModels
 {
-    public class FinancesIndexViewModel
+    public class HistoryIndexViewModel
     {
         [DataType(DataType.Date)]
         public DateTime? StartDate { get; set; }
