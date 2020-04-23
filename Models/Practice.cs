@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace LindyCircleMVC.Models
@@ -34,6 +35,12 @@ namespace LindyCircleMVC.Models
                 else return Attendances.Count();
             }
         }
+        [Display(Name = "Punch Cards Sold"), NotMapped]
+        public int PunchCardsSold { get; set; }
+        [Display(Name = "Punch Card Revenue"), DisplayFormat(DataFormatString = "{0:#,##0.00}"), NotMapped]
+        public decimal PunchCardRevenue { get; set; }
+        [Display(Name = "Practice Total"), DisplayFormat(DataFormatString = "{0:#,##0.00}")]
+        public decimal PracticeTotal => AttendanceRevenue + MiscRevenue - PracticeCost - MiscExpense + PunchCardRevenue;
 
         public ICollection<Attendance> Attendances { get; set; }
     }

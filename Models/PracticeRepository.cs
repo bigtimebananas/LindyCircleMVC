@@ -11,10 +11,10 @@ namespace LindyCircleMVC.Models
         public PracticeRepository(LindyCircleDbContext dbContext) {
             _dbContext = dbContext;
         }
+
         public IEnumerable<Practice> AllPractices =>
             _dbContext.Practices
-                .Include(i => i.Attendances)
-                .OrderByDescending(o => o.PracticeDate);
+                .Include(i => i.Attendances);
 
         public Practice GetPractice(int practiceID) {
             return _dbContext.Practices

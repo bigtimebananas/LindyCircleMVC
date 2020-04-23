@@ -1,0 +1,99 @@
+﻿@model FinancesIndexViewModel
+
+<table id="financesTable" class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Practices[0].PracticeDate)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].PracticeCost)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].AttendanceRevenue)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].MiscExpense)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].MiscRevenue)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].PunchCardsSold)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Practices[0].PunchCardRevenue)
+            </th>
+            <th class="text-right">
+                Line Total
+            </th>
+            <th class="text-right">
+                Running Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var practice in Model.Practices) {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-controller="Practice" asp-route-id=@practice.PracticeID>@Html.DisplayFor(modelItem => practice.PracticeDate)</a>
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.PracticeCost)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.AttendanceRevenue)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.MiscExpense)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.MiscRevenue)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.PunchCardsSold)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.PunchCardRevenue)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => practice.PracticeTotal)
+                </td>
+                <td class="text-right">
+                    @Model.Practices.Where(p => p.PracticeDate <= practice.PracticeDate).Sum(s => s.PracticeTotal)
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                Totals
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.PracticeCost).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.AttendanceRevenue).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.MiscExpense).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.MiscRevenue).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.PunchCardsSold).ToString()
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.PunchCardRevenue).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.PracticeTotal).ToString("#,##0.00")
+            </td>
+            <td class="text-right">
+                @Model.Practices.Sum(p => p.PracticeTotal).ToString("#,##0.00")
+            </td>
+        </tr>
+    </tfoot>
+</table>

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LindyCircleMVC.Models;
+﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
@@ -29,7 +27,7 @@ namespace LindyCircleMVC.Controllers
             {
                 Practices = _practiceRepository.SearchPractices(startDate, endDate).ToList()
             };
-            return PartialView(practiceListViewModel);
+            return PartialView("_PracticeList", practiceListViewModel);
         }
 
         public IActionResult Details(int id) {

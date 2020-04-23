@@ -1,0 +1,30 @@
+﻿@model FinancesIndexViewModel
+
+<div class="row">
+    <div class="col-md-10">
+        <form>
+            <div>
+                <label asp-for="StartDate" class="col-form-label"></label>
+                <input asp-for="StartDate" id="startDate" />
+                &nbsp;
+                <label asp-for="EndDate" class="col-form-label"></label>
+                <input asp-for="EndDate" id="endDate" />
+                <button class="btn btn-sm btn-dark" id="btnFilter">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12" id="financeDetails">
+        <partial name="_Details" model="@Model" />
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $('#btnFilter').click(function () {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            $('#financeDetails').load('/Finances/GetPartial', { startDate, endDate });
+        });
+    </script>
+}

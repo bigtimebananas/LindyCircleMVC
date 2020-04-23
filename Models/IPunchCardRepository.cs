@@ -4,6 +4,7 @@ namespace LindyCircleMVC.Models
 {
     public interface IPunchCardRepository
     {
+        IEnumerable<PunchCard> AllPunchCards { get; }
         IEnumerable<PunchCard> GetPunchCardsByMember(int memberID);
         PunchCard GetPunchCard(int punchCardID);
         PunchCard PurchasePunchCard(PunchCard punchCard);

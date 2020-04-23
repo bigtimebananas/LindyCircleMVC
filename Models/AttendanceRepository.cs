@@ -11,6 +11,10 @@ namespace LindyCircleMVC.Models
             _dbContext = dbContext;
         }
 
+        public IEnumerable<Attendance> GetAllAttendances => 
+            _dbContext.Attendance
+                .Include(i => i.Practice);
+
         public IEnumerable<Attendance> GetAttendancesByMember(int memberID) =>
             _dbContext.Attendance
                 .Include(i => i.Practice)

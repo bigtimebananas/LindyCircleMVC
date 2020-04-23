@@ -7,24 +7,27 @@
     }
 </style>
 
-<form name="form1">
-    <div>
-        <label asp-for="StartDate" class="col-form-label"></label>
-        <input asp-for="StartDate" id="startDate" />
-        &nbsp;
-        <label asp-for="EndDate" class="col-form-label"></label>
-        <input asp-for="EndDate" id="endDate" />
-        <button class="btn btn-sm btn-dark" id="btnFilter">Filter</button>
-        <div asp-validation-summary="All" class="text-danger"></div>
+<div class="row">
+    <div class="col-md-9">
+        <form name="form1">
+            <div>
+                <label asp-for="StartDate" class="col-form-label"></label>
+                <input asp-for="StartDate" id="startDate" />
+                &nbsp;
+                <label asp-for="EndDate" class="col-form-label"></label>
+                <input asp-for="EndDate" id="endDate" />
+                <button class="btn btn-sm btn-dark" id="btnFilter">Filter</button>
+            </div>
+        </form>
+
+        @if (TempData["Message"] != null) {
+            <div class="@TempData["Style"]">@TempData["Message"]</div>
+        }
     </div>
-</form>
 
-@if (TempData["Message"] != null) {
-    <div class="@TempData["Style"]">@TempData["Message"]</div>
-}
-
-<div id="practices">
-    <partial name="_PracticeList" model="@Model" />
+    <div id="practices" class="col-md-12">
+        <partial name="_PracticeList" model="@Model" />
+    </div>
 </div>
 
 @section scripts{
@@ -56,8 +59,8 @@
             });
         });
         $('#btnFilter').click(function () {
-            var startDate = document.getElementById('startDate').value;
-            var endDate = document.getElementById('endDate').value;
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
             $('#practices').load('/Practice/GetPartial', { startDate, endDate });
         });
     </script>
