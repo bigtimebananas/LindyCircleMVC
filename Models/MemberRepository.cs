@@ -49,6 +49,23 @@ namespace LindyCircleMVC.Models
             return selectList;
         }
 
+        public IList<SelectListItem> GetPracticeMemberList(int practiceID) {
+            var selectList = new List<SelectListItem>();
+            var query = from m in _dbContext.Members
+                        where !m.Inactive && !(
+                            from a in _dbContext.Attendance
+                            select a.MemberID)
+                            .Contains(m.MemberID)
+                        select m;
+            foreach (var member in query)
+                selectList.Add(new SelectListItem
+                {
+                    Value = member.MemberID.ToString(),
+                    Text = member.FirstLastName
+                });
+            return selectList;
+        }
+
         public Member GetMember(int memberID) =>
             _dbContext.Members
                 .Include(i => i.Attendances)

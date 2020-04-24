@@ -1,0 +1,23 @@
+﻿@model AttendanceIndexViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <label asp-for="@Model.PracticeDate"></label>
+        <input asp-for="@Model.PracticeDate" id="practiceDate" />
+    </div>
+    <div id="practiceDetails" class="col-md-8">
+
+    </div>
+</div>
+
+<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var practiceDate = $('#practiceDate').val();
+        $('#practiceDetails').load('/Attendance/GetPracticeDetails', { practiceDate: practiceDate });
+    });
+    $('#practiceDate').change(function () {
+        var practiceDate = $('#practiceDate').val();
+        $('#practiceDetails').load('/Attendance/GetPracticeDetails', { practiceDate: practiceDate });
+    });
+</script>

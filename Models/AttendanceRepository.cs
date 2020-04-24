@@ -30,5 +30,28 @@ namespace LindyCircleMVC.Models
 
         public Attendance GetAttendance(int attendanceID) =>
             _dbContext.Attendance.FirstOrDefault(a => a.AttendanceID == attendanceID);
+
+        public Attendance AddAttendance(Attendance attendance) {
+            _dbContext.Attendance.Add(attendance);
+            _dbContext.SaveChanges();
+            return attendance;
+        }
+
+        public void DeleteAttendance(Attendance attendance) {
+            if (AttendanceExists(attendance.AttendanceID)) {
+                _dbContext.Remove(attendance);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        public void DeleteAttendance(int attendanceID) {
+            if (AttendanceExists(attendanceID)) {
+                var attendance = _dbContext.Attendance.Find(attendanceID);
+                _dbContext.Remove(attendance);
+                _dbContext.SaveChanges();
+            }
+        }
+
+        private bool AttendanceExists(int attendanceID) => _dbContext.Attendance.Find(attendanceID) != null;
     }
 }
