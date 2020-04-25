@@ -1,6 +1,7 @@
 ﻿@model PracticeDetailsViewModel
 
 <h4>Practice Details</h4>
+<hr />
 
 @if (@TempData["Message"] != null) {
     <div class="@TempData["Style"]">@TempData["Message"]</div>
@@ -22,7 +23,7 @@
                 <label asp-for="@Model.Practice.PracticeDate" class="col-form-label"></label>
                 <input asp-for="@Model.Practice.PracticeDate" class="form-control col-md-4" readonly="readonly" />
             </div>
-            <div class=" form-inline">
+            <div class="form-inline">
                 <label asp-for="@Model.Practice.PracticeNumber" class="col-form-label"></label>
                 <input asp-for="@Model.Practice.PracticeNumber" class="form-control col-md-2" />
             </div>

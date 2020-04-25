@@ -6,6 +6,7 @@ namespace LindyCircleMVC.Models
     {
         IEnumerable<PunchCard> AllPunchCards { get; }
         IEnumerable<PunchCard> GetPunchCardsByMember(int memberID);
+        PunchCard GetUsablePunchCard(int memberID);
         PunchCard GetPunchCard(int punchCardID);
         PunchCard PurchasePunchCard(PunchCard punchCard);
         PunchCard TransferPunchCard(PunchCard punchCard);

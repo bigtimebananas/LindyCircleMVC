@@ -1,0 +1,75 @@
+﻿@model AttendanceCheckInViewModel
+
+<form id="checkInForm" asp-action="CheckIn" data-ajax="true" data-ajax-update="#checkInMembers" data-ajax-mode="replace">
+    <div class="form-inline">
+        <label class="col-form-label">Member</label>
+        @Html.DropDownList("ddlMembers", Model.Members, new { @class = "col-md-auto", id = "ddlMembers" })
+    </div>
+    <div class="form-inline">
+        <label class="col-form-label">Payment method</label>
+        @Html.DropDownList("ddlPayment", Model.PaymentMethods, new { @class = "col-md-auto", id = "ddlPayment" })
+    </div>
+</form>
+
+<div>
+    <table class="table-striped table-bordered" id="attendees">
+        <caption>Attendees</caption>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Attendances[0].Member.FirstLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Attendances[0].PaymentTypeText)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.Attendances[0].PaymentAmount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attendance in Model.Attendances) {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Member" asp-route-id=@attendance.MemberID>@Html.DisplayFor(modelItem => attendance.Member.FirstLastName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => attendance.PaymentTypeText)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => attendance.PaymentAmount)
+                    </td>
+                    <td><span class="oi oi-trash"></span></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    @string.Format("Attended: {0}", Model.Attendances.Count())
+                </td>
+                <td>
+                    Collected
+                </td>
+                <td class="text-right">
+                    @Model.Attendances.Sum(s => s.PaymentAmount).ToString("##,#.00")
+                </td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ($('#selectedMemberID').val() != 0)
+            $('#ddlSelectMembers').val($('#selectedMemberID').val());
+        $('#punchCards').load('/PunchCard/GetPartial',
+            { selectedMemberID: $('#ddlSelectMembers option:selected').val() });
+    });
+    $('#ddlSelectMembers').change(function () {
+        $('#punchCards').load('/PunchCard/GetPartial',
+            { selectedMemberID: $('#ddlSelectMembers option:selected').val() });
+    });
+</script>

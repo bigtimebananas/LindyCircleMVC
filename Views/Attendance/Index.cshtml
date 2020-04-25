@@ -1,23 +1,35 @@
 ﻿@model AttendanceIndexViewModel
 
+<style>
+    .form-inline label {
+        justify-content: left;
+        width: 130px;
+    }
+</style>
+
+<h4>Practice Attendance</h4>
+<hr />
+
 <div class="row">
-    <div class="col-md-6">
-        <label asp-for="@Model.PracticeDate"></label>
-        <input asp-for="@Model.PracticeDate" id="practiceDate" />
+    <div class="form-inline col-md-10">
+        <label asp-for="@Model.PracticeDate" class="col-form-label"></label>
+        <input asp-for="@Model.PracticeDate" id="practiceDate" class="form-control col-md-auto" />
     </div>
-    <div id="practiceDetails" class="col-md-8">
+    <div id="practiceDetails" class="col-md-10">
 
     </div>
 </div>
 
-<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var practiceDate = $('#practiceDate').val();
-        $('#practiceDetails').load('/Attendance/GetPracticeDetails', { practiceDate: practiceDate });
-    });
-    $('#practiceDate').change(function () {
-        var practiceDate = $('#practiceDate').val();
-        $('#practiceDetails').load('/Attendance/GetPracticeDetails', { practiceDate: practiceDate });
-    });
-</script>
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var practiceDate = $('#practiceDate').val();
+            $('#practiceDetails').load('/Attendance/GetPracticeDetails', { practiceDate: practiceDate });
+        });
+        $('#practiceDate').change(function () {
+            var practiceDate = $('#practiceDate').val();
+            $('#practiceDetails').load('/Attendance/GetPracticeDetails', { practiceDate: practiceDate });
+        });
+    </script>
+}

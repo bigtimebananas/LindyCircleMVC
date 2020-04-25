@@ -24,7 +24,10 @@ namespace LindyCircleMVC.Models
         }
 
         public Practice GetPracticeByDate(DateTime practiceDate) =>
-            _dbContext.Practices.FirstOrDefault(p => p.PracticeDate == practiceDate);
+            _dbContext.Practices
+                .Include(i => i.Attendances)
+                        .ThenInclude(i => i.Member)
+                .FirstOrDefault(p => p.PracticeDate == practiceDate);
 
         public IEnumerable<Practice> SearchPractices(DateTime? startDate, DateTime? endDate) {
             var practices = AllPractices;
@@ -71,6 +74,7 @@ namespace LindyCircleMVC.Models
         public bool PracticeNumberUsed(int practiceID, int practiceNumber) {
             if (_dbContext.Practices.FirstOrDefault(p => p.PracticeNumber == practiceNumber) == null)
                 return false;
+            if (practiceID == 0) return true;
             var practice = GetPractice(practiceID);
             _dbContext.Entry<Practice>(practice).State = EntityState.Detached;
             return practice.PracticeNumber != practiceNumber;

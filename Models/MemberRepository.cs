@@ -51,13 +51,15 @@ namespace LindyCircleMVC.Models
 
         public IList<SelectListItem> GetPracticeMemberList(int practiceID) {
             var selectList = new List<SelectListItem>();
-            var query = from m in _dbContext.Members
-                        where !m.Inactive && !(
-                            from a in _dbContext.Attendance
-                            select a.MemberID)
-                            .Contains(m.MemberID)
-                        select m;
-            foreach (var member in query)
+            var attendees = _dbContext.Attendance
+                .Where(a => a.PracticeID == practiceID)
+                .Select(s => s.Member);
+            var members = _dbContext.Members
+                .Where(m => !m.Inactive)
+                .Except(attendees)
+                .OrderBy(o => o.FirstName)
+                    .ThenBy(o => o.LastName);
+            foreach (var member in members)
                 selectList.Add(new SelectListItem
                 {
                     Value = member.MemberID.ToString(),

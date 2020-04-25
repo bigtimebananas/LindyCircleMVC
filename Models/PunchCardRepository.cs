@@ -17,6 +17,7 @@ namespace LindyCircleMVC.Models
                     .ThenInclude(i => i.Attendance)
                 .Include(i => i.PurchaseMember)
                 .Include(i => i.CurrentMember);
+
         public PunchCard GetPunchCard(int punchCardID) =>
             _dbContext.PunchCards
                 .Include(i => i.PunchCardUsages)
@@ -33,6 +34,12 @@ namespace LindyCircleMVC.Models
                 .Include(i => i.CurrentMember)
                 .Where(p => p.CurrentMemberID == memberID || p.PurchaseMemberID == memberID);
 
+        public PunchCard GetUsablePunchCard(int memberID) =>
+            _dbContext.PunchCards
+                .Where(p => p.CurrentMemberID == memberID &&
+                    p.RemainingPunches > 0)
+                .OrderBy(o => o.RemainingPunches)
+                .FirstOrDefault();
 
         public PunchCard PurchasePunchCard(PunchCard punchCard) {
             punchCard.CurrentMemberID = punchCard.PurchaseMemberID;
