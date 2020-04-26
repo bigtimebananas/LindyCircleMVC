@@ -9,9 +9,9 @@ namespace LindyCircleMVC.ViewModels
     {
         public Practice Practice { get; set; }
         public IList<Attendance> Attendances { get; set; }
-        public IList<SelectListItem> Members { get; set; }
+        public IList<SelectListItem> MembersList { get; set; }
+        public IEnumerable<Member> Members { get; set; }
         public List<SelectListItem> PaymentMethods { get; set; }
         public decimal AdmissionCost { get; set; }
-
     }
 }

@@ -43,8 +43,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#checkInMembers').html('');
-        var practiceID = $('#practiceID').val();
-        $('#checkInMembers').load('/Attendance/CheckInPartial', { practiceID: practiceID });
+        $practiceID = $('#practiceID').val();
+        $('#checkInMembers').load('/Attendance/CheckInPartial', { practiceID: $practiceID });
     });
 </script>

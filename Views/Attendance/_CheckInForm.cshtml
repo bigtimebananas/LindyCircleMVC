@@ -3,7 +3,9 @@
 <form id="checkInForm" asp-action="CheckIn" data-ajax="true" data-ajax-update="#checkInMembers" data-ajax-mode="replace">
     <div class="form-inline">
         <label class="col-form-label">Member</label>
-        @Html.DropDownList("ddlMembers", Model.Members, new { @class = "col-md-auto", id = "ddlMembers" })
+        @Html.DropDownList("ddlMembers", Model.MembersList, new { @class = "col-md-auto", id = "ddlMembers" })
+        <label class="col-form-label">Unused punches:</label>
+        <span id="unusedPunches"></span>
     </div>
     <div class="form-inline">
         <label class="col-form-label">Payment method</label>
@@ -63,13 +65,13 @@
 
 <script>
     $(document).ready(function () {
-        if ($('#selectedMemberID').val() != 0)
-            $('#ddlSelectMembers').val($('#selectedMemberID').val());
-        $('#punchCards').load('/PunchCard/GetPartial',
-            { selectedMemberID: $('#ddlSelectMembers option:selected').val() });
+        $memberID = $('#ddlMembers option:selected').val();
+        @*$memberSerial = '@Html.Raw(Json.Serialize(Model.Members))';
+        $members = JSON.parse($memberSerial);*@
+        
+        
     });
-    $('#ddlSelectMembers').change(function () {
-        $('#punchCards').load('/PunchCard/GetPartial',
-            { selectedMemberID: $('#ddlSelectMembers option:selected').val() });
+    $('#ddlMembers').change(function () {
+
     });
 </script>

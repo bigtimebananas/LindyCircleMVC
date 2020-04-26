@@ -126,7 +126,8 @@ namespace LindyCircleMVC.Controllers
             var attendanceCheckInViewModel = new AttendanceCheckInViewModel
             {
                 Practice = _practiceRepository.GetPractice(practiceID),
-                Members = _memberRepository.GetPracticeMemberList(practiceID),
+                MembersList = _memberRepository.GetPracticeMemberList(practiceID),
+                Members = _memberRepository.GetMembers(true),
                 PaymentMethods = paymentOptions,
                 AdmissionCost = _defaultRepository.GetDefaultValue("Door price"),
                 Attendances = _attendanceRepository.GetAttendancesByPractice(practiceID).ToList()
