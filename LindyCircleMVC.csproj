@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\**" />
+    <Compile Remove="Views\Shared\Components\**" />
+    <Content Remove="Components\**" />
+    <Content Remove="Views\Shared\Components\**" />
+    <EmbeddedResource Remove="Components\**" />
+    <EmbeddedResource Remove="Views\Shared\Components\**" />
+    <None Remove="Components\**" />
+    <None Remove="Views\Shared\Components\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20200419195538_InitalCreateLC.cs" />
     <Compile Remove="Migrations\20200419195538_InitalCreateLC.Designer.cs" />
   </ItemGroup>
@@ -27,8 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
-    <Folder Include="Views\Shared\Components\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
