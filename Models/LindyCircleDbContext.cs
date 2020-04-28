@@ -19,7 +19,7 @@ namespace LindyCircleMVC.Models
         public DbSet<PunchCard> PunchCards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.HasAnnotation("Relational:DefaultSchema", "dbsa");
+            modelBuilder.HasAnnotation("Relational:DefaultSchema", "dbo");
 
             modelBuilder.Entity<Attendance>(entity => {
                 entity.HasKey(e => e.AttendanceID)

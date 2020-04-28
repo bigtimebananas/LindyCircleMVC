@@ -8,11 +8,11 @@ namespace LindyCircleMVC.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "dbsa");
+                name: "dbo");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -27,7 +27,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -53,7 +53,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Defaults",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     DefaultID = table.Column<int>(nullable: false)
@@ -68,7 +68,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Members",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     MemberID = table.Column<int>(nullable: false)
@@ -84,7 +84,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Practices",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     PracticeID = table.Column<int>(nullable: false)
@@ -103,7 +103,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -118,7 +118,7 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -126,7 +126,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -141,7 +141,7 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -149,7 +149,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
@@ -163,7 +163,7 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -171,7 +171,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -183,14 +183,14 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -198,7 +198,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -212,7 +212,7 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -220,7 +220,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "PunchCards",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     PunchCardID = table.Column<int>(nullable: false)
@@ -236,14 +236,14 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_PunchCards_CurrentMembers",
                         column: x => x.CurrentMemberID,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "Members",
                         principalColumn: "MemberID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PunchCards_PurchaseMembers",
                         column: x => x.PurchaseMemberID,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "Members",
                         principalColumn: "MemberID",
                         onDelete: ReferentialAction.Restrict);
@@ -251,7 +251,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "PunchCardUsage",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     UsageID = table.Column<int>(nullable: false)
@@ -265,7 +265,7 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_PunchCardUsage_PunchCards",
                         column: x => x.PunchCardID,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "PunchCards",
                         principalColumn: "PunchCardID",
                         onDelete: ReferentialAction.Restrict);
@@ -273,7 +273,7 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Attendance",
-                schema: "dbsa",
+                schema: "dbo",
                 columns: table => new
                 {
                     AttendanceID = table.Column<int>(nullable: false)
@@ -289,21 +289,21 @@ namespace LindyCircleMVC.Migrations
                     table.ForeignKey(
                         name: "FK_PunchCardUsage_Attendance",
                         column: x => x.AttendanceID,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "PunchCardUsage",
                         principalColumn: "UsageID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Attendance_Members",
                         column: x => x.MemberID,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "Members",
                         principalColumn: "MemberID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Attendance_Practices",
                         column: x => x.PracticeID,
-                        principalSchema: "dbsa",
+                        principalSchema: "dbo",
                         principalTable: "Practices",
                         principalColumn: "PracticeID",
                         onDelete: ReferentialAction.Restrict);
@@ -311,13 +311,13 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true,
@@ -325,31 +325,31 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetUserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetUserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true,
@@ -357,52 +357,52 @@ namespace LindyCircleMVC.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendance_MemberID",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "Attendance",
                 column: "MemberID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendance_PracticeID",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "Attendance",
                 column: "PracticeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PracticeDate",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "Practices",
                 column: "PracticeDate",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PracticeNumber",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "Practices",
                 column: "PracticeNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PunchCards_CurrentMemberID",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "PunchCards",
                 column: "CurrentMemberID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PunchCards_PurchaseMemberID",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "PunchCards",
                 column: "PurchaseMemberID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PunchCardUsage_AttendanceID",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "PunchCardUsage",
                 column: "AttendanceID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PunchCardUsage_PunchCardID",
-                schema: "dbsa",
+                schema: "dbo",
                 table: "PunchCardUsage",
                 column: "PunchCardID");
         }
@@ -411,55 +411,55 @@ namespace LindyCircleMVC.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserClaims",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserLogins",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserRoles",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "Attendance",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "Defaults",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "PunchCardUsage",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "Practices",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "PunchCards",
-                schema: "dbsa");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "Members",
-                schema: "dbsa");
+                schema: "dbo");
         }
     }
 }
