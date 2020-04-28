@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LindyCircleMVC.Models
 {
@@ -10,11 +11,11 @@ namespace LindyCircleMVC.Models
             : base(options) {
         }
 
-        public DbSet<Attendance> Attendance { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Default> Defaults { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Practice> Practices { get; set; }
-        public DbSet<PunchCardUsage> PunchCardUsage { get; set; }
+        public DbSet<PunchCardUsage> PunchCardUsages { get; set; }
         public DbSet<PunchCard> PunchCards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -31,7 +32,8 @@ namespace LindyCircleMVC.Models
                     .HasName("IX_Attendance_PracticeID");
 
                 entity.Property(e => e.AttendanceID)
-                    .HasColumnName("AttendanceID");
+                    .HasColumnName("AttendanceID")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.MemberID)
                     .HasColumnName("MemberID")
@@ -69,7 +71,8 @@ namespace LindyCircleMVC.Models
                     .HasName("PK_Defaults");
 
                 entity.Property(e => e.DefaultID)
-                    .HasColumnName("DefaultID");
+                    .HasColumnName("DefaultID")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.DefaultName)
                     .HasColumnName("DefaultName")
@@ -88,7 +91,8 @@ namespace LindyCircleMVC.Models
                     .HasName("PK_Members");
 
                 entity.Property(e => e.MemberID)
-                    .HasColumnName("MemberID");
+                    .HasColumnName("MemberID")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.FirstName)
                     .HasColumnName("FirstName")
@@ -121,7 +125,8 @@ namespace LindyCircleMVC.Models
                     .IsUnique();
 
                 entity.Property(e => e.PracticeID)
-                    .HasColumnName("PracticeID");
+                    .HasColumnName("PracticeID")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.PracticeDate)
                     .HasColumnName("PracticeDate")
@@ -168,7 +173,8 @@ namespace LindyCircleMVC.Models
                     .HasName("IX_PunchCardUsage_PunchCardID");
 
                 entity.Property(e => e.UsageID)
-                    .HasColumnName("UsageID");
+                    .HasColumnName("UsageID")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.AttendanceID)
                     .HasColumnName("AttendanceID")
@@ -202,7 +208,8 @@ namespace LindyCircleMVC.Models
                     .HasName("IX_PunchCards_PurchaseMemberID");
 
                 entity.Property(e => e.PunchCardID)
-                    .HasColumnName("PunchCardID");
+                    .HasColumnName("PunchCardID")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                 entity.Property(e => e.PurchaseMemberID)
                     .HasColumnName("PurchaseMemberID")

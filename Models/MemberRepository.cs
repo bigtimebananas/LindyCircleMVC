@@ -51,7 +51,7 @@ namespace LindyCircleMVC.Models
 
         public IList<SelectListItem> GetPracticeMemberList(int practiceID) {
             var selectList = new List<SelectListItem>();
-            var attendees = _dbContext.Attendance
+            var attendees = _dbContext.Attendances
                 .Where(a => a.PracticeID == practiceID)
                 .Select(s => s.Member);
             var members = _dbContext.Members

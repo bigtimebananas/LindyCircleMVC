@@ -13,35 +13,35 @@ namespace LindyCircleMVC.Models
         }
 
         public IEnumerable<Attendance> GetAllAttendances =>
-            _dbContext.Attendance
+            _dbContext.Attendances
                 .Include(i => i.Practice);
 
         public IEnumerable<Attendance> GetAttendancesByMember(int memberID) =>
-            _dbContext.Attendance
+            _dbContext.Attendances
                 .Include(i => i.Practice)
                 .Where(a => a.MemberID == memberID)
                 .OrderBy(o => o.Practice.PracticeDate);
 
         public IEnumerable<Attendance> GetAttendancesByPractice(int practiceID) =>
-            _dbContext.Attendance
+            _dbContext.Attendances
                 .Include(i => i.Member)
                 .Where(a => a.PracticeID == practiceID)
                 .OrderBy(o => o.Member.LastName)
                     .ThenBy(o => o.Member.FirstName);
 
         public Attendance GetAttendance(int attendanceID) =>
-            _dbContext.Attendance.FirstOrDefault(a => a.AttendanceID == attendanceID);
+            _dbContext.Attendances.FirstOrDefault(a => a.AttendanceID == attendanceID);
 
         public Attendance AddAttendance(Attendance attendance) {
-            _dbContext.Attendance.Add(attendance);
+            _dbContext.Attendances.Add(attendance);
             _dbContext.SaveChanges();
             return attendance;
         }
 
         public Attendance AddAttendance(Attendance attendance, PunchCard punchCard) {
-            _dbContext.Attendance.Add(attendance);
+            _dbContext.Attendances.Add(attendance);
             _dbContext.SaveChanges();
-            _dbContext.PunchCardUsage.Add(new PunchCardUsage
+            _dbContext.PunchCardUsages.Add(new PunchCardUsage
             {
                 AttendanceID = attendance.AttendanceID,
                 PunchCardID = punchCard.PunchCardID
@@ -52,9 +52,9 @@ namespace LindyCircleMVC.Models
 
         public void DeleteAttendance(Attendance attendance) {
             if (AttendanceExists(attendance.AttendanceID)) {
-                var punchCardUsage = _dbContext.PunchCardUsage.FirstOrDefault(p => p.AttendanceID == attendance.AttendanceID);
+                var punchCardUsage = _dbContext.PunchCardUsages.FirstOrDefault(p => p.AttendanceID == attendance.AttendanceID);
                 if (punchCardUsage != null) {
-                    _dbContext.PunchCardUsage.Remove(punchCardUsage);
+                    _dbContext.PunchCardUsages.Remove(punchCardUsage);
                     _dbContext.SaveChanges();
                 }
                 _dbContext.Remove(attendance);
@@ -64,12 +64,12 @@ namespace LindyCircleMVC.Models
 
         public void DeleteAttendance(int attendanceID) {
             if (AttendanceExists(attendanceID)) {
-                var attendance = _dbContext.Attendance.Find(attendanceID);
+                var attendance = _dbContext.Attendances.Find(attendanceID);
                 _dbContext.Remove(attendance);
                 _dbContext.SaveChanges();
             }
         }
 
-        private bool AttendanceExists(int attendanceID) => _dbContext.Attendance.Find(attendanceID) != null;
+        private bool AttendanceExists(int attendanceID) => _dbContext.Attendances.Find(attendanceID) != null;
     }
 }

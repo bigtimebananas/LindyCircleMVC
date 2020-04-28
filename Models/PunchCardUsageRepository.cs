@@ -17,7 +17,7 @@ namespace LindyCircleMVC.Models
                     PunchCardID = punchCardID,
                     AttendanceID = attendanceID
                 };
-                _dbContext.PunchCardUsage.Add(usage);
+                _dbContext.PunchCardUsages.Add(usage);
                 _dbContext.SaveChanges();
                 return usage;
             }
@@ -26,19 +26,19 @@ namespace LindyCircleMVC.Models
 
         public void DeletePunchCardUsage(int punchCardUsageID) {
             if (PunchCardUsageExists(punchCardUsageID)) {
-                var usage = _dbContext.PunchCardUsage.Find(punchCardUsageID);
+                var usage = _dbContext.PunchCardUsages.Find(punchCardUsageID);
                 _dbContext.Remove(usage);
                 _dbContext.SaveChanges();
             }
         }
 
         public IEnumerable<PunchCardUsage> GetPunchCardUsageByPunchCard(int punchCardID) =>
-            _dbContext.PunchCardUsage.Where(p => p.PunchCardID == punchCardID);
+            _dbContext.PunchCardUsages.Where(p => p.PunchCardID == punchCardID);
 
         private bool PunchCardExists(int punchCardID) => _dbContext.PunchCards.Find(punchCardID) != null;
 
-        private bool AttendanceExists(int attendanceID) => _dbContext.Attendance.Find(attendanceID) != null;
+        private bool AttendanceExists(int attendanceID) => _dbContext.Attendances.Find(attendanceID) != null;
 
-        private bool PunchCardUsageExists(int punchCardUsageID) => _dbContext.PunchCardUsage.Find(punchCardUsageID) != null;
+        private bool PunchCardUsageExists(int punchCardUsageID) => _dbContext.PunchCardUsages.Find(punchCardUsageID) != null;
     }
 }
