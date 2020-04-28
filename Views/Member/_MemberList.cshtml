@@ -43,26 +43,32 @@
     </tbody>
 </table>
 
-<link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />
-<script src="~/lib/datatables/datatables.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#memberTable').DataTable({
-            oLanguage: {
-                sSearch: "Search Members"
-            },
-            autoWidth: false,
-            fixedHeader: true,
-            pageLength: 50,
-            columns: [
-                { visible: false },
-                null,
-                { searchable: false },
-                { searchable: false, orderable: false },
-                { searchable: false, orderable: false }
-            ],
-            rowId: 'MemberID',
-            order: [[1, "asc"]]
+<environment names="Development">
+    <link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/datatables.min.js"></script>
+</environment>
+<environment names="Staging, Production">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
+</environment>
+    <script>
+        $(document).ready(function () {
+            $('#memberTable').DataTable({
+                oLanguage: {
+                    sSearch: "Search Members"
+                },
+                autoWidth: false,
+                fixedHeader: true,
+                pageLength: 50,
+                columns: [
+                    { visible: false },
+                    null,
+                    { searchable: false },
+                    { searchable: false, orderable: false },
+                    { searchable: false, orderable: false }
+                ],
+                rowId: 'MemberID',
+                order: [[1, "asc"]]
+            });
         });
-    });
-</script>
+    </script>
