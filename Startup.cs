@@ -38,6 +38,7 @@ namespace LindyCircleMVC
             //services.AddHttpContextAccessor();
             //services.AddSession();
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +61,7 @@ namespace LindyCircleMVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id:int?}");
+                endpoints.MapRazorPages();
             });
             //CreateUserRoles(userManager, roleManager).Wait();
         }

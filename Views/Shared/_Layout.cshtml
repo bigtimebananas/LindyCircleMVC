@@ -9,7 +9,7 @@
     <link href="~/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
     @RenderSection("HeadLinks", required: false)
-    
+
 </head>
 <body>
     <header>
@@ -21,28 +21,28 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    @*<partial name="_LoginPartial" />*@
+                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        @*@if (User.IsInRole("Admin")) {*@
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Member" asp-action="List">Members</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Practice" asp-action="List">Practices</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="PunchCard" asp-action="Index">Punch Cards</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Attendance" asp-action="Index">Attendance</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="History" asp-action="Index">History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Finances" asp-action="Index">Finances</a>
-                        </li>
-                        @*}*@
+                        @if (User.IsInRole("Admin")) {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Member" asp-action="List">Members</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Practice" asp-action="List">Practices</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="PunchCard" asp-action="Index">Punch Cards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Attendance" asp-action="Index">Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="History" asp-action="Index">History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Finances" asp-action="Index">Finances</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
