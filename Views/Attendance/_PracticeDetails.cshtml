@@ -5,45 +5,55 @@
 }
 
 <form id="practiceDetailsForm" asp-controller="Attendance" asp-action="Edit" asp-route-practice="@Model.Practice"
-      data-ajax="true" data-ajax-update="#practiceDetails" data-ajax-mode="replace">
+      data-ajax="true" data-ajax-update="#practiceDetails" data-ajax-mode="replace" class="col-md-10 no-pad-left">
     <input id="practiceID" type="hidden" asp-for="@Model.Practice.PracticeID" />
     <input type="hidden" asp-for="@Model.Practice.PracticeDate" />
-    <div class="form-inline">
-        <label asp-for="@Model.Practice.PracticeNumber" class="col-form-label"></label>
-        <input asp-for="@Model.Practice.PracticeNumber" class="form-control col-md-2" />
+    <div class="form-group row">
+        <label asp-for="@Model.Practice.PracticeNumber" class="col-md-2 col-form-label"></label>
+        <div class="col-md-2">
+            <input asp-for="@Model.Practice.PracticeNumber" class="form-control" />
+        </div>
     </div>
-    <div class="form-inline">
-        <label asp-for="@Model.Practice.PracticeTopic" class="col-form-label"></label>
-        <input asp-for="@Model.Practice.PracticeTopic" class="form-control col-md-9" />
+    <div class="form-group row">
+        <label asp-for="@Model.Practice.PracticeTopic" class="col-md-2 col-form-label"></label>
+        <div class="col-md-8">
+            <input asp-for="@Model.Practice.PracticeTopic" class="form-control" />
+        </div>
     </div>
-    <div class="form-inline">
-        <label asp-for="@Model.Practice.PracticeCost" class="col-form-label"></label>
-        <input asp-for="@Model.Practice.PracticeCost" class="form-control col-md-2" />
+    <div class="form-group row">
+        <label asp-for="@Model.Practice.PracticeCost" class="col-md-2 col-form-label"></label>
+        <div class="col-md-2">
+            <input asp-for="@Model.Practice.PracticeCost" class="form-control" />
+        </div>
     </div>
-    <div class="form-inline">
-        <label asp-for="@Model.Practice.MiscExpense" class="col-form-label"></label>
-        <input asp-for="@Model.Practice.MiscExpense" class="form-control col-md-2" />
+    <div class="form-group row">
+        <label asp-for="@Model.Practice.MiscExpense" class="col-md-2 col-form-label"></label>
+        <div class="col-md-2">
+            <input asp-for="@Model.Practice.MiscExpense" class="form-control" />
+        </div>
     </div>
-    <div class="form-inline">
-        <label asp-for="@Model.Practice.MiscRevenue" class="col-form-label"></label>
-        <input asp-for="@Model.Practice.MiscRevenue" class="form-control col-md-2" />
+    <div class="form-group row">
+        <label asp-for="@Model.Practice.MiscRevenue" class="col-md-2 col-form-label"></label>
+        <div class="col-md-2">
+            <input asp-for="@Model.Practice.MiscRevenue" class="form-control" />
+        </div>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <input type="submit" value="Save practice details" class="btn btn-sm btn-secondary" />
+    <div class="form-group row" style="padding-left: 15px;">
+        <input type="submit" value="Save practice details" class="btn btn-sm btn-secondary" style="margin-right: 5px;" />
         @if (Model.Practice.AttendeeCount == 0) {
-            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id=@Model.Practice.PracticeID>Delete practice</a>
+            <a asp-action="DeletePractice" class="btn btn-sm btn-danger" asp-route-id=@Model.Practice.PracticeID>Delete practice</a>
         }
     </div>
 </form>
 
-<div class="col-md-10" id="checkInMembers">
+<div class="col-md-12 no-pad-left" id="selectMember">
 
 </div>
 
 <script>
     $(document).ready(function () {
         $practiceID = $('#practiceID').val();
-        $('#checkInMembers').load('/Attendance/CheckInPartial', { practiceID: $practiceID });
+        $('#selectMember').load('/Attendance/GetMembersPartial', { practiceID: $practiceID });
     });
 </script>

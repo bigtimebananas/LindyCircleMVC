@@ -8,6 +8,7 @@ namespace LindyCircleMVC.Models
 {
     public class Practice
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PracticeID { get; set; }
         [Required, Display(Name = "Practice Date"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime PracticeDate { get; set; }

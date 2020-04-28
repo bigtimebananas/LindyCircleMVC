@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace LindyCircleMVC.Models
 {
     public class Member
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MemberID { get; set; }
         [Required, Display(Name = "First Name"), MaxLength(50)]
         public string FirstName { get; set; }

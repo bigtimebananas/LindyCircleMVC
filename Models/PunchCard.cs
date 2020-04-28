@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LindyCircleMVC.Models
 {
     public class PunchCard
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PunchCardID { get; set; }
         public int PurchaseMemberID { get; set; }
         public int CurrentMemberID { get; set; }

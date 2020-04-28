@@ -1,0 +1,29 @@
+﻿@model AttendanceMembersViewModel
+
+<form id="selectMember" class="col-md-10 no-pad-left">
+    <div class="form-group row">
+        <input type="hidden" asp-for="@Model.PracticeID" id="practiceID" />
+        <label class="col-md-3 col-form-label">Member</label>
+        <div class="col-md-auto row">
+            @Html.DropDownList("ddlMembers", Model.Members, new { @class = "form-control col-md-auto", id = "ddlMembers" })
+        </div>
+    </div>
+</form>
+
+<div class="col-md-12 no-pad-left" id="checkInMembers" >
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $memberID = $('#ddlMembers option:selected').val();
+        $practiceID = $('#practiceID').val();
+        $('#checkInMembers').load('/Attendance/CheckInPartial', { practiceID: $practiceID, memberID: $memberID });
+
+    });
+    $('#ddlMembers').change(function () {
+        $memberID = $('#ddlMembers option:selected').val();
+        $practiceID = $('#practiceID').val();
+        $('#checkInMembers').load('/Attendance/CheckInPartial', { practiceID: $practiceID, memberID: $memberID });
+    });
+</script>

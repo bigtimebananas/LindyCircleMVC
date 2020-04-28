@@ -46,7 +46,9 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <input type="submit" value="Save practice details" class="btn btn-sm btn-secondary" />
-                <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id=@Model.Practice.PracticeID>Delete practice</a>
+                @if (Model.Practice.AttendeeCount == 0) {
+                    <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id=@Model.Practice.PracticeID>Delete practice</a>
+                }
             </div>
         </form>
     </div>

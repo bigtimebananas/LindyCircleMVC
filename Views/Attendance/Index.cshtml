@@ -1,9 +1,8 @@
 ﻿@model AttendanceIndexViewModel
 
 <style>
-    .form-inline label {
-        justify-content: left;
-        width: 130px;
+    .no-pad-left {
+        padding-left: 0px;
     }
 </style>
 
@@ -11,14 +10,19 @@
 <hr />
 
 <div class="row">
-    <div class="form-inline col-md-10">
-        <label asp-for="@Model.PracticeDate" class="col-form-label"></label>
-        <input asp-for="@Model.PracticeDate" id="practiceDate" class="form-control col-md-auto" />
-    </div>
-    <div id="practiceDetails" class="col-md-10">
+    <form class="col-md-10">
+        <div class="form-group row">
+            <label asp-for="@Model.PracticeDate" class="col-form-label col-md-2"></label>
+            <div class="col-md-auto">
+                <input asp-for="@Model.PracticeDate" id="practiceDate" class="form-control" />
+            </div>
+        </div>
+    </form>
+    <div id="practiceDetails" class="col-md-12">
 
     </div>
 </div>
+
 
 @section scripts{
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>

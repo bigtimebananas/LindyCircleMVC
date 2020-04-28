@@ -34,12 +34,15 @@ namespace LindyCircleMVC.Models
                 .Include(i => i.CurrentMember)
                 .Where(p => p.CurrentMemberID == memberID || p.PurchaseMemberID == memberID);
 
-        public PunchCard GetUsablePunchCard(int memberID) =>
-            _dbContext.PunchCards
-                .Where(p => p.CurrentMemberID == memberID &&
-                    p.RemainingPunches > 0)
+        public PunchCard GetUsablePunchCard(int memberID) {
+            var punchCards = _dbContext.PunchCards
+                .Include(i => i.PunchCardUsages)
+                .Where(p => p.CurrentMemberID == memberID).AsEnumerable();
+
+            return punchCards.Where(p => p.RemainingPunches > 0)
                 .OrderBy(o => o.RemainingPunches)
-                .FirstOrDefault();
+                .First();
+        }
 
         public PunchCard PurchasePunchCard(PunchCard punchCard) {
             punchCard.CurrentMemberID = punchCard.PurchaseMemberID;

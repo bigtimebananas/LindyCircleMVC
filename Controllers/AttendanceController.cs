@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LindyCircleMVC.Models;
+﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
@@ -15,13 +14,16 @@ namespace LindyCircleMVC.Controllers
         private readonly IDefaultRepository _defaultRepository;
         private readonly IMemberRepository _memberRepository;
         private readonly IAttendanceRepository _attendanceRepository;
+        private readonly IPunchCardRepository _punchCardRepository;
 
         public AttendanceController(IPracticeRepository practiceRepository, IDefaultRepository defaultRepository,
-            IMemberRepository memberRepository, IAttendanceRepository attendanceRepository) {
+            IMemberRepository memberRepository, IAttendanceRepository attendanceRepository,
+            IPunchCardRepository punchCardRepository) {
             _practiceRepository = practiceRepository;
             _defaultRepository = defaultRepository;
             _memberRepository = memberRepository;
             _attendanceRepository = attendanceRepository;
+            _punchCardRepository = punchCardRepository;
         }
         public ViewResult Index() {
             var attendanceIndexViewModel = new AttendanceIndexViewModel
@@ -35,10 +37,10 @@ namespace LindyCircleMVC.Controllers
 
         public PartialViewResult GetPracticeDetails(DateTime practiceDate) {
             var practice = _practiceRepository.GetPracticeByDate(practiceDate);
+            var viewName = "_PracticeDetails";
             if (practice == null) {
                 practice = new Practice
                 {
-                    PracticeID = 0,
                     PracticeDate = practiceDate,
                     PracticeNumber = _practiceRepository.GetNextPracticeNumber(),
                     PracticeTopic = string.Empty,
@@ -46,15 +48,14 @@ namespace LindyCircleMVC.Controllers
                     MiscExpense = 0M,
                     MiscRevenue = 0M
                 };
+                viewName = "_NewPractice";
             }
             var practiceDetailsViewModel = new PracticeDetailsViewModel
             {
                 Practice = practice,
                 PracticeDate = practiceDate
             };
-            if (practice.PracticeID == 0)
-                return PartialView("_NewPractice", practiceDetailsViewModel);
-            else return PartialView("_PracticeDetails", practiceDetailsViewModel);
+            return PartialView(viewName, practiceDetailsViewModel);
         }
 
         public IActionResult Add(Practice practice) {
@@ -100,7 +101,7 @@ namespace LindyCircleMVC.Controllers
             return RedirectToAction("Index", "Attendance");
         }
 
-        public IActionResult Delete(int id) {
+        public IActionResult DeletePractice(int id) {
             var practice = _practiceRepository.GetPractice(id);
             if (practice.AttendeeCount > 0) {
                 TempData["Message2"] = $"Practice #{practice.PracticeNumber} has attendees and cannot be deleted.";
@@ -115,7 +116,17 @@ namespace LindyCircleMVC.Controllers
             return RedirectToAction("Index", "Attendance");
         }
 
-        public PartialViewResult CheckInPartial(int practiceID) {
+        public PartialViewResult GetMembersPartial(int practiceID) {
+            var attendanceMembersViewModel = new AttendanceMembersViewModel
+            {
+                PracticeID = practiceID,
+                Members = _memberRepository.GetPracticeMemberList(practiceID).ToList()
+            };
+            return PartialView("_Members", attendanceMembersViewModel);
+        }
+
+        public PartialViewResult CheckInPartial(int practiceID, int memberID) {
+            var member = _memberRepository.GetMember(memberID);
             var paymentOptions = new List<SelectListItem>
                 {
                     new SelectListItem { Value = "0", Text = "None" },
@@ -123,16 +134,50 @@ namespace LindyCircleMVC.Controllers
                     new SelectListItem { Value = "2", Text = "Punch card" },
                     new SelectListItem { Value = "3", Text = "Other" }
                 };
+            if (member.RemainingPunches == 0)
+                paymentOptions.RemoveAt(2);
             var attendanceCheckInViewModel = new AttendanceCheckInViewModel
             {
                 Practice = _practiceRepository.GetPractice(practiceID),
-                MembersList = _memberRepository.GetPracticeMemberList(practiceID),
-                Members = _memberRepository.GetMembers(true),
+                Member = member,
                 PaymentMethods = paymentOptions,
                 AdmissionCost = _defaultRepository.GetDefaultValue("Door price"),
                 Attendances = _attendanceRepository.GetAttendancesByPractice(practiceID).ToList()
             };
             return PartialView("_CheckInForm", attendanceCheckInViewModel);
+        }
+
+        public IActionResult CheckIn(int memberID, int practiceID, int paymentType, decimal paymentAmount) {
+            var attendance = new Attendance
+            {
+                MemberID = memberID,
+                PracticeID = practiceID,
+                PaymentType = paymentType,
+                PaymentAmount = paymentAmount
+            };
+            if (paymentType == 2) {
+                var punchCard = _punchCardRepository.GetUsablePunchCard(memberID);
+                _attendanceRepository.AddAttendance(attendance, punchCard);
+            }
+            else _attendanceRepository.AddAttendance(attendance);
+            var attendanceMembersViewModel = new AttendanceMembersViewModel
+            {
+                PracticeID = practiceID,
+                Members = _memberRepository.GetPracticeMemberList(practiceID).ToList()
+            };
+            return PartialView("_Members", attendanceMembersViewModel);
+        }
+
+        public IActionResult DeleteAttendance(int id) {
+            var attendance = _attendanceRepository.GetAttendance(id);
+            var practiceID = attendance.PracticeID;
+            _attendanceRepository.DeleteAttendance(attendance);
+            var attendanceMembersViewModel = new AttendanceMembersViewModel
+            {
+                PracticeID = practiceID,
+                Members = _memberRepository.GetPracticeMemberList(practiceID).ToList()
+            };
+            return PartialView("_Members", attendanceMembersViewModel);
         }
     }
 }

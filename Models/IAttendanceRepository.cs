@@ -9,6 +9,7 @@ namespace LindyCircleMVC.Models
         IEnumerable<Attendance> GetAttendancesByPractice(int practiceID);
         Attendance GetAttendance(int attendanceID);
         Attendance AddAttendance(Attendance attendance);
+        Attendance AddAttendance(Attendance attendance, PunchCard punchCard);
         void DeleteAttendance(Attendance attendance);
         void DeleteAttendance(int attendanceID);
     }

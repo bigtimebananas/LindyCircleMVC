@@ -1,77 +1,107 @@
 ﻿@model AttendanceCheckInViewModel
 
-<form id="checkInForm" asp-action="CheckIn" data-ajax="true" data-ajax-update="#checkInMembers" data-ajax-mode="replace">
-    <div class="form-inline">
-        <label class="col-form-label">Member</label>
-        @Html.DropDownList("ddlMembers", Model.MembersList, new { @class = "col-md-auto", id = "ddlMembers" })
-        <label class="col-form-label">Unused punches:</label>
-        <span id="unusedPunches"></span>
+<form id="checkInForm" asp-action="CheckIn" data-ajax="true" data-ajax-update="#selectMember"
+      data-ajax-mode="replace" class="col-md-10 no-pad-left" asp-route-memberID="@Model.Member.MemberID"
+      asp-route-practiceID="@Model.Practice.PracticeID" asp-route-paymentType="@Model.PaymentType"
+      asp-route-paymentAmount="@Model.PaymentAmount">
+    @if (Model.Member.RemainingPunches > 0) {
+        <div class="form-group row">
+            <input type="hidden" id="remainingPunches" asp-for="@Model.Member.RemainingPunches" />
+            <label class="col-md-3 col-form-label">Unused punches</label>
+            <div class="col-md-9 row">
+                <span>@Model.Member.RemainingPunches</span>
+            </div>
+        </div>
+    }
+    <div class="form-group row">
+        <input type="hidden" id="doorPrice" asp-for="@Model.AdmissionCost" />
+        <label class="col-md-3 col-form-label">Payment method</label>
+        <div class="col-md-auto row">
+            <input type="hidden" id="paymentType" asp-for="@Model.PaymentType" />
+            @Html.DropDownList("ddlPayment", Model.PaymentMethods, new { @class = "form-control col-md-auto", id = "ddlPayment" })
+        </div>
     </div>
-    <div class="form-inline">
-        <label class="col-form-label">Payment method</label>
-        @Html.DropDownList("ddlPayment", Model.PaymentMethods, new { @class = "col-md-auto", id = "ddlPayment" })
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Amount</label>
+        <div class="col-md-9 row">
+            <input asp-for="@Model.PaymentAmount" class="form-control col-md-2" id="admissionAmount" />
+            <input type="submit" value="Check in" class="btn btn-sm btn-primary" style="margin-left: 5px;" />
+        </div>
     </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
 </form>
-
-<div>
-    <table class="table-striped table-bordered" id="attendees">
-        <caption>Attendees</caption>
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Attendances[0].Member.FirstLastName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Attendances[0].PaymentTypeText)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.Attendances[0].PaymentAmount)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var attendance in Model.Attendances) {
+@if (Model.Practice.AttendeeCount > 0) {
+    <div>
+        <table class="table-striped table-bordered" id="attendees">
+            <caption>Attendees</caption>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Attendances[0].Member.FirstLastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Attendances[0].PaymentTypeText)
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.Attendances[0].PaymentAmount)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var attendance in Model.Attendances) {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="Member" asp-route-id=@attendance.MemberID>@Html.DisplayFor(modelItem => attendance.Member.FirstLastName)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => attendance.PaymentTypeText)
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayFor(modelItem => attendance.PaymentAmount)
+                        </td>
+                        <td>
+                            <a asp-action="DeleteAttendance" asp-controller="Attendance" asp-route-id="@attendance.AttendanceID"
+                               data-ajax="true" data-ajax-update="#selectMember"><span class="oi oi-trash"></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
                 <tr>
                     <td>
-                        <a asp-action="Details" asp-controller="Member" asp-route-id=@attendance.MemberID>@Html.DisplayFor(modelItem => attendance.Member.FirstLastName)</a>
+                        @string.Format("Attended: {0}", Model.Attendances.Count())
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => attendance.PaymentTypeText)
+                        Collected
                     </td>
                     <td class="text-right">
-                        @Html.DisplayFor(modelItem => attendance.PaymentAmount)
+                        @Model.Attendances.Sum(s => s.PaymentAmount).ToString("##,#.00")
                     </td>
-                    <td><span class="oi oi-trash"></span></td>
+                    <td></td>
                 </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td>
-                    @string.Format("Attended: {0}", Model.Attendances.Count())
-                </td>
-                <td>
-                    Collected
-                </td>
-                <td class="text-right">
-                    @Model.Attendances.Sum(s => s.PaymentAmount).ToString("##,#.00")
-                </td>
-                <td></td>
-            </tr>
-        </tfoot>
-    </table>
-</div>
-
+            </tfoot>
+        </table>
+    </div>
+}
 <script>
     $(document).ready(function () {
-        $memberID = $('#ddlMembers option:selected').val();
-        @*$memberSerial = '@Html.Raw(Json.Serialize(Model.Members))';
-        $members = JSON.parse($memberSerial);*@
-        
-        
+        if ($('#remainingPunches').val() > 0)
+            $('#ddlPayment').val('2');
+        else $('#ddlPayment').val('1')
+        $paymentType = $('#ddlPayment option:selected').val();
+        $('#paymentType').val($paymentType);
+        $doorPrice = $('#doorPrice').val();
+        if ($paymentType == '1')
+            $('#admissionAmount').val($doorPrice);
+        else $('#admissionAmount').val('0.00');
     });
-    $('#ddlMembers').change(function () {
-
+    $('#ddlPayment').change(function () {
+        $paymentType = $('#ddlPayment option:selected').val();
+        $('#paymentType').val($paymentType);
+        $doorPrice = $('#doorPrice').val();
+        if ($paymentType == '1')
+            $('#admissionAmount').val($doorPrice);
+        else $('#admissionAmount').val('0.00');
     });
 </script>

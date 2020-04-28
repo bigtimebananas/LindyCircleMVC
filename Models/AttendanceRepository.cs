@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +12,7 @@ namespace LindyCircleMVC.Models
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Attendance> GetAllAttendances => 
+        public IEnumerable<Attendance> GetAllAttendances =>
             _dbContext.Attendance
                 .Include(i => i.Practice);
 
@@ -37,8 +38,25 @@ namespace LindyCircleMVC.Models
             return attendance;
         }
 
+        public Attendance AddAttendance(Attendance attendance, PunchCard punchCard) {
+            _dbContext.Attendance.Add(attendance);
+            _dbContext.SaveChanges();
+            _dbContext.PunchCardUsage.Add(new PunchCardUsage
+            {
+                AttendanceID = attendance.AttendanceID,
+                PunchCardID = punchCard.PunchCardID
+            });
+            _dbContext.SaveChanges();
+            return attendance;
+        }
+
         public void DeleteAttendance(Attendance attendance) {
             if (AttendanceExists(attendance.AttendanceID)) {
+                var punchCardUsage = _dbContext.PunchCardUsage.FirstOrDefault(p => p.AttendanceID == attendance.AttendanceID);
+                if (punchCardUsage != null) {
+                    _dbContext.PunchCardUsage.Remove(punchCardUsage);
+                    _dbContext.SaveChanges();
+                }
                 _dbContext.Remove(attendance);
                 _dbContext.SaveChanges();
             }

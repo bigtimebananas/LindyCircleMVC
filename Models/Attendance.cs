@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LindyCircleMVC.Models
 {
     public class Attendance
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AttendanceID { get; set; }
         public int MemberID { get; set; }
         public int PracticeID { get; set; }
