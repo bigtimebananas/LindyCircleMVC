@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace LindyCircleMVC.Models
 {
-    public class LindyCircleDbContext : DbContext
+    public class LindyCircleDbContext : IdentityDbContext<IdentityUser>
     {
         public LindyCircleDbContext(DbContextOptions<LindyCircleDbContext> options)
             : base(options) {
@@ -232,6 +234,8 @@ namespace LindyCircleMVC.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PunchCards_PurchaseMembers");
             });
+
+            base.OnModelCreating(modelBuilder);
 
             //OnModelCreatingPartial(modelBuilder);
         }
