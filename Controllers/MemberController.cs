@@ -1,5 +1,6 @@
 ﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -23,6 +24,7 @@ namespace LindyCircleMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult List(Member newMember) {
             if (!ModelState.IsValid)
                 return View();
@@ -52,12 +54,14 @@ namespace LindyCircleMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult ToggleActive(Member member) {
             member.Inactive = !member.Inactive;
             _memberRepository.UpdateMember(member);
             return RedirectToAction("Details", "Member", new { id = member.MemberID });
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id) {
             var member = _memberRepository.GetMember(id);
             if (member == null)
@@ -67,6 +71,7 @@ namespace LindyCircleMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Member member) {
             if (!ModelState.IsValid)
                 return View();

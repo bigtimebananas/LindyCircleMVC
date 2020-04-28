@@ -1,5 +1,6 @@
 ﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace LindyCircleMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Practice practice) {
             if (!ModelState.IsValid)
                 return View();
@@ -51,6 +53,7 @@ namespace LindyCircleMVC.Controllers
             return RedirectToAction("Details", "Practice", new { id = practice.PracticeID });
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id) {
             var practice = _practiceRepository.GetPractice(id);
             if (practice == null)

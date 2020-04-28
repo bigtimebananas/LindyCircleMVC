@@ -23,7 +23,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.IsInRole("Admin")) {
+                        @*@if (User.IsInRole("Admin")) {*@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Member" asp-action="List">Members</a>
                             </li>
@@ -42,7 +42,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Finances" asp-action="Index">Finances</a>
                             </li>
-                        }
+                        @*}*@
                     </ul>
                 </div>
             </div>

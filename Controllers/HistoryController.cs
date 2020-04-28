@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LindyCircleMVC.Models;
+using LindyCircleMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
-using LindyCircleMVC.Models;
-using LindyCircleMVC.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 
 namespace LindyCircleMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class HistoryController : Controller
     {
         private readonly IPracticeRepository _practiceRepository;

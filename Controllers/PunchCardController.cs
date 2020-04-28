@@ -1,11 +1,13 @@
 ﻿using LindyCircleMVC.Models;
 using LindyCircleMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PunchCardController : Controller
     {
         private readonly IMemberRepository _memberRepository;

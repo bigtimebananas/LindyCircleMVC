@@ -1,4 +1,5 @@
 ﻿using LindyCircleMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FinancesController : Controller
     {
         private readonly IPracticeRepository _practiceRepository;
