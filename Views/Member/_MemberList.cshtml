@@ -22,53 +22,45 @@
     </thead>
     <tbody>
         @foreach (var member in Model) {
-            <tr>
-                <td>
-                    @member.MemberID
-                </td>
-                <td>
-                    <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@Html.DisplayFor(modelItem => member.FirstLastName)</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => member.TotalAttendance)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => member.RemainingPunches)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => member.ActiveText)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @member.MemberID
+            </td>
+            <td>
+                <a asp-controller="Member" asp-action="Details" asp-route-id="@member.MemberID">@Html.DisplayFor(modelItem => member.FirstLastName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.TotalAttendance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.RemainingPunches)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.ActiveText)
+            </td>
+        </tr>
         }
     </tbody>
 </table>
 
-<environment names="Development">
-    <link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />
-    <script src="~/lib/datatables/datatables.min.js"></script>
-</environment>
-<environment names="Staging, Production">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
-</environment>
-    <script>
-        $(document).ready(function () {
-            $('#memberTable').DataTable({
-                oLanguage: {
-                    sSearch: "Search Members"
-                },
-                autoWidth: false,
-                fixedHeader: true,
-                pageLength: 50,
-                columns: [
-                    { visible: false },
-                    null,
-                    { searchable: false },
-                    { searchable: false, orderable: false },
-                    { searchable: false, orderable: false }
-                ],
-                rowId: 'MemberID',
-                order: [[1, "asc"]]
-            });
+<script>
+    $(document).ready(function () {
+        $('#memberTable').DataTable({
+            oLanguage: {
+                sSearch: "Search Members"
+            },
+            autoWidth: false,
+            fixedHeader: true,
+            pageLength: 50,
+            columns: [
+                { visible: false },
+                null,
+                { searchable: false },
+                { searchable: false, orderable: false },
+                { searchable: false, orderable: false }
+            ],
+            rowId: 'MemberID',
+            order: [[1, "asc"]]
         });
-    </script>
+    });
+</script>

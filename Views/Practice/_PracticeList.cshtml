@@ -34,35 +34,35 @@
     </thead>
     <tbody>
         @foreach (var practice in Model) {
-            <tr>
-                <td>
-                    @practice.PracticeID
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id=@practice.PracticeID>@Html.DisplayFor(modelItem => practice.PracticeNumber)</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => practice.PracticeDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => practice.PracticeTopic)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => practice.PracticeCost)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => practice.AttendanceRevenue)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => practice.MiscExpense)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => practice.MiscRevenue)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => practice.AttendeeCount)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @practice.PracticeID
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id=@practice.PracticeID>@Html.DisplayFor(modelItem => practice.PracticeNumber)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => practice.PracticeDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => practice.PracticeTopic)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => practice.PracticeCost)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => practice.AttendanceRevenue)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => practice.MiscExpense)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => practice.MiscRevenue)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => practice.AttendeeCount)
+            </td>
+        </tr>
         }
     </tbody>
     <tfoot>
@@ -90,14 +90,6 @@
     </tfoot>
 </table>
 
-<environment names="Development">
-    <link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />
-    <script src="~/lib/datatables/datatables.min.js"></script>
-</environment>
-<environment names="Staging, Production">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
-</environment>
 <script>
     $(document).ready(function () {
         $('#practiceTable').DataTable({
