@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,8 +25,8 @@ namespace LindyCircleMVC.Models
             _dbContext.Attendances
                 .Include(i => i.Member)
                 .Where(a => a.PracticeID == practiceID)
-                .OrderBy(o => o.Member.LastName)
-                    .ThenBy(o => o.Member.FirstName);
+                .OrderBy(o => o.Member.FirstName)
+                    .ThenBy(o => o.Member.LastName);
 
         public Attendance GetAttendance(int attendanceID) =>
             _dbContext.Attendances.FirstOrDefault(a => a.AttendanceID == attendanceID);
