@@ -3,8 +3,8 @@
 <form id="selectMember" class="col-md-10 no-pad-left">
     <div class="form-group row">
         <input type="hidden" asp-for="@Model.PracticeID" id="practiceID" />
-        <label class="col-md-3 col-form-label">Member</label>
-        <div class="col-md-auto row">
+        <label class="col-md-2 col-form-label">Member</label>
+        <div class="col-md-auto">
             @Html.DropDownList("ddlMembers", Model.Members, new { @class = "form-control col-md-auto", id = "ddlMembers" })
         </div>
     </div>

@@ -52,6 +52,11 @@ caption {
     padding-left: 5px;
 }
 
+.no-side-margins {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

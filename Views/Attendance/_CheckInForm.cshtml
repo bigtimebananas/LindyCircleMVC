@@ -7,25 +7,25 @@
     @if (Model.Member.RemainingPunches > 0) {
         <div class="form-group row">
             <input type="hidden" id="remainingPunches" asp-for="@Model.Member.RemainingPunches" />
-            <label class="col-md-3 col-form-label">Unused punches</label>
-            <div class="col-md-9 row">
-                <span>@Model.Member.RemainingPunches</span>
+            <label class="col-md-2 col-form-label">Unused punches</label>
+            <div class="col-md-9">
+                <input asp-for="@Model.Member.RemainingPunches" class="form-control col-md-2" readonly="readonly" />
             </div>
         </div>
     }
     <div class="form-group row">
         <input type="hidden" id="doorPrice" asp-for="@Model.AdmissionCost" />
-        <label class="col-md-3 col-form-label">Payment method</label>
-        <div class="col-md-auto row">
+        <label class="col-md-2 col-form-label">Payment method</label>
+        <div class="col-md-auto">
             <input type="hidden" id="paymentType" asp-for="@Model.PaymentType" />
             @Html.DropDownList("ddlPayment", Model.PaymentMethods, new { @class = "form-control col-md-auto", id = "ddlPayment" })
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-md-3 col-form-label">Amount</label>
-        <div class="col-md-9 row">
-            <input asp-for="@Model.PaymentAmount" class="form-control col-md-2" id="admissionAmount" />
-            <input type="submit" value="Check in" class="btn btn-sm btn-primary" style="margin-left: 5px;" />
+        <label class="col-md-2 col-form-label">Amount</label>
+        <div class="col-md-9 row no-side-margins">
+            <input asp-for="@Model.PaymentAmount" class="form-control col-md-2" id="admissionAmount" style="margin-right: 5px;" />
+            <input type="submit" value="Check in" class="btn btn-sm btn-primary" />
         </div>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
