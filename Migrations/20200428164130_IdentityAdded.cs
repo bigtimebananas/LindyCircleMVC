@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace LindyCircleMVC.Migrations
 {
     public partial class IdentityAdded : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.EnsureSchema(
                 name: "dbo");
 
@@ -20,8 +19,7 @@ namespace LindyCircleMVC.Migrations
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
 
@@ -46,8 +44,7 @@ namespace LindyCircleMVC.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
@@ -61,8 +58,7 @@ namespace LindyCircleMVC.Migrations
                     DefaultName = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
                     DefaultValue = table.Column<decimal>(type: "decimal(5, 2)", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Defaults", x => x.DefaultID);
                 });
 
@@ -77,8 +73,7 @@ namespace LindyCircleMVC.Migrations
                     LastName = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
                     Inactive = table.Column<bool>(nullable: false, defaultValue: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Members", x => x.MemberID);
                 });
 
@@ -96,8 +91,7 @@ namespace LindyCircleMVC.Migrations
                     MiscRevenue = table.Column<decimal>(type: "decimal(5, 2)", nullable: false, defaultValue: 0m),
                     PracticeTopic = table.Column<string>(unicode: false, maxLength: 255, nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Practices", x => x.PracticeID);
                 });
 
@@ -112,8 +106,7 @@ namespace LindyCircleMVC.Migrations
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
@@ -135,8 +128,7 @@ namespace LindyCircleMVC.Migrations
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
@@ -157,8 +149,7 @@ namespace LindyCircleMVC.Migrations
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
@@ -177,8 +168,7 @@ namespace LindyCircleMVC.Migrations
                     UserId = table.Column<string>(nullable: false),
                     RoleId = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
@@ -206,8 +196,7 @@ namespace LindyCircleMVC.Migrations
                     Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
@@ -230,8 +219,7 @@ namespace LindyCircleMVC.Migrations
                     PurchaseDate = table.Column<DateTime>(type: "date", nullable: false),
                     PurchaseAmount = table.Column<decimal>(type: "decimal(4, 2)", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_PunchCards", x => x.PunchCardID);
                     table.ForeignKey(
                         name: "FK_PunchCards_CurrentMembers",
@@ -259,8 +247,7 @@ namespace LindyCircleMVC.Migrations
                     AttendanceID = table.Column<int>(nullable: false),
                     PunchCardID = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_PunchCardUsage", x => x.UsageID);
                     table.ForeignKey(
                         name: "FK_PunchCardUsage_PunchCards",
@@ -283,8 +270,7 @@ namespace LindyCircleMVC.Migrations
                     PaymentType = table.Column<int>(type: "int", nullable: false),
                     PaymentAmount = table.Column<decimal>(type: "decimal(4, 2)", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Attendance", x => x.AttendanceID);
                     table.ForeignKey(
                         name: "FK_PunchCardUsage_Attendance",
@@ -407,8 +393,7 @@ namespace LindyCircleMVC.Migrations
                 column: "PunchCardID");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims",
                 schema: "dbo");

@@ -14,12 +14,12 @@ namespace LindyCircleMVC.Models
         [Display(Name = "Type")]
         public string PaymentTypeText =>
             PaymentType switch
-                {
-                    0 => "None",
-                    1 => "Cash",
-                    2 => "Punch card",
-                    _ => "Other",
-                };
+            {
+                0 => "None",
+                1 => "Cash",
+                2 => "Punch card",
+                _ => "Other",
+            };
         [Required, Display(Name = "Amount"), DisplayFormat(DataFormatString = "{0:#,##0.00}")]
         public decimal PaymentAmount { get; set; }
 

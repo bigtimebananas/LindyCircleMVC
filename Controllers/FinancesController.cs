@@ -17,8 +17,7 @@ namespace LindyCircleMVC.Controllers
             _practiceRepository = practiceRepository;
             _punchCardRepository = punchCardRepository;
         }
-        public ViewResult Index()
-        {
+        public ViewResult Index() {
             ViewBag.Title = "Finances";
             return View();
         }
