@@ -21,22 +21,22 @@
     }
 
     function drawChart(dataValues) {
-        var data = new google.visualization.DataTable();
+        $data = new google.visualization.DataTable();
 
-        data.addColumn('date', 'Practice Date');
-        data.addColumn('number', 'Attendance');
+        $data.addColumn('date', 'Practice Date');
+        $data.addColumn('number', 'Attendance');
 
         for (var i = 0; i < dataValues.length; i++) {
-            data.addRow([new Date(dataValues[i].practiceDateString), dataValues[i].attendeeCount]);
+            $data.addRow([new Date(dataValues[i].practiceDateString), dataValues[i].attendeeCount]);
         }
 
-        var attendanceRange = data.getColumnRange(1);
-        var vTicks = [];
-        for (var i = 0; i <= attendanceRange.max + 1; i++) {
-            vTicks.push(i);
+        $attendanceRange = $data.getColumnRange(1);
+        $vTicks = [];
+        for (var i = 0; i <= $attendanceRange.max + 1; i++) {
+            $vTicks.push(i);
         }
 
-        var options = {
+        $options = {
             title: 'Practice Attendance',
             legend: { position: 'none', },
             height: 600,
@@ -51,7 +51,7 @@
             vAxis: {
                 title: 'Attendance',
                 gridlines: { interval: 1 },
-                ticks: vTicks
+                ticks: $vTicks
             },
             pointsVisible: true,
             pointShape: 'diamond',
@@ -60,7 +60,7 @@
 
         //Swap these out when Material Line charts have all options
         var chart = new google.visualization.LineChart(document.getElementById('attendanceChart'));
-        chart.draw(data, options);
+        chart.draw($data, $options);
         //var chart = new google.charts.Line(document.getElementById('attendanceChart'));
         //chart.draw(data, google.charts.Line.convertOptions(options));
     }

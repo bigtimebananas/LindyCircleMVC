@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
+    [Authorize]
     public class PracticeController : Controller {
         private readonly IPracticeRepository _practiceRepository;
 

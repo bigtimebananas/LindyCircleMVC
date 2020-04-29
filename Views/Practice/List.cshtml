@@ -28,23 +28,16 @@
 </div>
 
 @section scripts{
-    <environment names="Development">
-        <link href="~/lib/datatables/datatables.min.css" rel="stylesheet" />
-        <script src="~/lib/datatables/datatables.min.js"></script>
-    </environment>
-    <environment names="Staging, Production">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.css" />
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
-    </environment>
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <partial name="_DatatablesPartial" />
+    <partial name="_AjaxScriptsPartial" />
     <script>
         $(document).ready(function () {
             $('#practices').load('/Practice/GetPartial');
         });
         $('#btnFilter').click(function () {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            $('#practices').load('/Practice/GetPartial', { startDate, endDate });
+            $startDate = $('#startDate').val();
+            $endDate = $('#endDate').val();
+            $('#practices').load('/Practice/GetPartial', { $startDate, $endDate });
         });
     </script>
 }

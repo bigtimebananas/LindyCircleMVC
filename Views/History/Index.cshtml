@@ -20,17 +20,17 @@
 </div>
 
 @section scripts{
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <partial name="_AjaxScriptsPartial" />
     <script>
         $(document).ready(function () {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            $('#history').load('/History/GetPartial', { startDate: startDate, endDate: endDate });
+            $startDate = $('#startDate').val();
+            $endDate = $('#endDate').val();
+            $('#history').load('/History/GetPartial', { startDate: $startDate, endDate: $endDate });
         });
         $('#btnFilter').click(function () {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            $('#history').load('/History/GetPartial', { startDate: startDate, endDate: endDate });
+            $startDate = $('#startDate').val();
+            $endDate = $('#endDate').val();
+            $('#history').load('/History/GetPartial', { startDate: $startDate, endDate: $endDate });
         });
     </script>
 }

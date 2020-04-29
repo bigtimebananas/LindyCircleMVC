@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IMemberRepository _memberRepository;

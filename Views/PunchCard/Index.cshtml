@@ -28,7 +28,7 @@
 
 @section scripts{
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <partial name="_AjaxScriptsPartial" />
     <script>
         $(document).ready(function () {
             if ($('#selectedMemberID').val() != 0)

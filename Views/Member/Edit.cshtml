@@ -3,26 +3,30 @@
 <h4>Change Member Name</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
+    <div class="col-md-12">
+        <form asp-action="Edit" method="post" class="col-md-6">
             <input type="hidden" asp-for="MemberID" />
-            <div class="form-inline">
-                <label asp-for="FirstName" class="col-form-label"></label>&nbsp;
-                <input asp-for="FirstName" class="form-control col-md-6" />
+            <div class="form-group row">
+                <label asp-for="FirstName" class="col-form-label col-md-3"></label>
+                <div class="col-md-4">
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
             </div>
-            <div class="form-inline">
-                <label asp-for="LastName" class="col-form-label"></label>&nbsp;
-                <input asp-for="LastName" class="form-control col-md-6" />
+            <div class="form-group row">
+                <label asp-for="LastName" class="col-form-label col-md-3"></label>
+                <div class="col-md-4">
+                    <input asp-for="LastName" class="form-control" />
+                </div>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group row" style="padding-left: 15px;">
                 <input type="submit" value="Save" class="btn btn-secondary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div style="padding-left: 15px;">
     <a asp-action="List">Back to List</a>
 </div>
 

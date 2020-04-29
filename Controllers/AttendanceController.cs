@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace LindyCircleMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AttendanceController : Controller
     {
         private readonly IPracticeRepository _practiceRepository;
@@ -59,7 +60,6 @@ namespace LindyCircleMVC.Controllers
             return PartialView(viewName, practiceDetailsViewModel);
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Add(Practice practice) {
             if (!ModelState.IsValid) {
                 var practiceDetailsViewModel = new PracticeDetailsViewModel
@@ -81,7 +81,6 @@ namespace LindyCircleMVC.Controllers
             return RedirectToAction("Index", "Attendance");
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Practice practice) {
             if (!ModelState.IsValid) {
                 var practiceDetailsViewModel = new PracticeDetailsViewModel
@@ -104,7 +103,6 @@ namespace LindyCircleMVC.Controllers
             return RedirectToAction("Index", "Attendance");
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult DeletePractice(int id) {
             var practice = _practiceRepository.GetPractice(id);
             if (practice.AttendeeCount > 0) {
@@ -151,7 +149,6 @@ namespace LindyCircleMVC.Controllers
             return PartialView("_CheckInForm", attendanceCheckInViewModel);
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult CheckIn(int memberID, int practiceID, int paymentType, decimal paymentAmount) {
             var attendance = new Attendance
             {
@@ -173,7 +170,6 @@ namespace LindyCircleMVC.Controllers
             return PartialView("_Members", attendanceMembersViewModel);
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult DeleteAttendance(int id) {
             var attendance = _attendanceRepository.GetAttendance(id);
             var practiceID = attendance.PracticeID;

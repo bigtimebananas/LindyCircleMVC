@@ -16,15 +16,15 @@
 </div>
 
 @section scripts{
-    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <partial name="_AjaxScriptsPartial" />
     <script>
         $('document').ready(function () {
             $('#financeDetails').load('/Finances/GetPartial');
         });
         $('#btnFilter').click(function () {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            $('#financeDetails').load('/Finances/GetPartial', { startDate, endDate });
+            $startDate = $('#startDate').val();
+            $endDate = $('#endDate').val();
+            $('#financeDetails').load('/Finances/GetPartial', { $startDate, $endDate });
         });
     </script>
 }
