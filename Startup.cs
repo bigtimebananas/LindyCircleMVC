@@ -28,6 +28,17 @@ namespace LindyCircleMVC
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<LindyCircleDbContext>();
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.User.RequireUniqueEmail = true;
+            });
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IDefaultRepository, DefaultRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
@@ -64,19 +75,17 @@ namespace LindyCircleMVC
                     pattern: "{controller=Home}/{action=Index}/{id:int?}");
                 endpoints.MapRazorPages();
             });
-            //CreateUserRoles(userManager, roleManager).Wait();
+            CreateUserRoles(userManager, roleManager).Wait();
         }
 
         private async Task CreateUserRoles(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) {
-            //Adding Addmin Role  
+            //Create the roles and seed them to the database  
             var roleCheck = await roleManager.RoleExistsAsync("Admin");
-            if (!roleCheck) {
-                //create the roles and seed them to the database  
+            if (!roleCheck)
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
-            }
-            //Assign Admin role to the main User here we have given our newly loregistered login id for Admin management  
-            IdentityUser user = await userManager.FindByNameAsync("mpipkin");
-            await userManager.AddToRoleAsync(user, "Admin");
+            roleCheck = await roleManager.RoleExistsAsync("Member");
+            if (!roleCheck)
+                await roleManager.CreateAsync(new IdentityRole("Member"));
         }
     }
 }
